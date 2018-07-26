@@ -33,12 +33,6 @@ namespace HRC_Document_Handler
             }
 
         }
-
-        //public static void Thread2()
-        //{
-        //    Console.WriteLine("OutTimed Service Active...");
-        //    }
-        //}
     }
     public class Program
     {
