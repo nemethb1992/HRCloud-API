@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27703.2035
+VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HRC Document Handler", "HRC Document Handler\HRC Document Handler.csproj", "{DD428D2F-CDE0-47B3-9289-4EBC5046A2BE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HRC Document Handler", "HRC Document Handler\HRC Document Handler.csproj", "{601C28BD-1CF1-49E3-977A-94FE9712FFEA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DD428D2F-CDE0-47B3-9289-4EBC5046A2BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DD428D2F-CDE0-47B3-9289-4EBC5046A2BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DD428D2F-CDE0-47B3-9289-4EBC5046A2BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DD428D2F-CDE0-47B3-9289-4EBC5046A2BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{601C28BD-1CF1-49E3-977A-94FE9712FFEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{601C28BD-1CF1-49E3-977A-94FE9712FFEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{601C28BD-1CF1-49E3-977A-94FE9712FFEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{601C28BD-1CF1-49E3-977A-94FE9712FFEA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {D610E2A7-A5F3-4194-B10E-1B0335E659C8}
+		SolutionGuid = {E2E20B35-95DB-4888-BD6D-23B129A1A75A}
 	EndGlobalSection
 EndGlobal

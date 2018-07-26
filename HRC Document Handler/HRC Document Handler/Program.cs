@@ -1,4 +1,4 @@
-ï»¿using HRC_Document_Handler.Controller;
+using HRC_Document_Handler.Controller;
 using HRC_Document_Handler.Model;
 using System;
 using System.Collections.Generic;
@@ -23,7 +23,7 @@ namespace HRC_Document_Handler
             {
                 date = DateTime.Now;
                 Console.Clear();
-                Console.WriteLine("(HR Cloud)\tE-mail API v1.0 - Phoenix Mecano KecskemÃ©t kft.\n");
+                Console.WriteLine("(HR Cloud)\tE-mail API v1.0 - Phoenix Mecano Kecskemét kft.\n");
                 Console.WriteLine("Press 'x' to pause.\n");
                 Console.WriteLine("Progess:\n");
                 Console.WriteLine("Synchronized - " + date);
@@ -45,7 +45,7 @@ namespace HRC_Document_Handler
         public static void Main()
         {
             Email email = new Email();
-            Console.WriteLine("(HR Cloud)\tE-mail API v1.0 - Phoenix Mecano KecskemÃ©t kft.\n");
+            Console.WriteLine("(HR Cloud)\tE-mail API v1.0 - Phoenix Mecano Kecskemét kft.\n");
             int iteration = 0;
             string setupSmtp = "";
             do
@@ -53,7 +53,7 @@ namespace HRC_Document_Handler
                 if (iteration > 0)
                 {
                     Console.Clear();
-                    Console.WriteLine("(HR Cloud)\tE-mail API v1.0 - Phoenix Mecano KecskemÃ©t kft.\n");
+                    Console.WriteLine("(HR Cloud)\tE-mail API v1.0 - Phoenix Mecano Kecskemét kft.\n");
                     Console.WriteLine("Try again!!\n");
                 }
 
@@ -61,12 +61,11 @@ namespace HRC_Document_Handler
                 setupSmtp = Console.ReadLine();
                 iteration++;
             } while (setupSmtp != "y" && setupSmtp != "n");
-
             if (setupSmtp == "y")
             {
                 dbEntities dbE = new dbEntities();
                 Console.Clear();
-                Console.WriteLine("(HR Cloud)\tE-mail API v1.0 - Phoenix Mecano KecskemÃ©t kft.\n");
+                Console.WriteLine("(HR Cloud)\tE-mail API v1.0 - Phoenix Mecano Kecskemét kft.\n");
 
                 string mailserver, login, password, url, sender_email;
                 int port, ssl;
@@ -80,17 +79,17 @@ namespace HRC_Document_Handler
                 login = Console.ReadLine();
                 Console.WriteLine("Password:");
                 password = Console.ReadLine();
-                Console.WriteLine("Megfigyelt e-mail cÃ­m::");
+                Console.WriteLine("Megfigyelt e-mail cím::");
                 sender_email = Console.ReadLine();
 
                 Console.Clear();
-                Console.WriteLine("(HR Cloud)\tE-mail API v1.0 - Phoenix Mecano KecskemÃ©t kft.\n");
+                Console.WriteLine("(HR Cloud)\tE-mail API v1.0 - Phoenix Mecano Kecskemét kft.\n");
                 Console.WriteLine("Mail Server:\t" + mailserver);
                 Console.WriteLine("Port:\t" + port.ToString());
                 Console.WriteLine("SSL:\t" + ssl);
                 Console.WriteLine("Login:\t" + login);
-                Console.WriteLine("Megfigyelt e-mail cÃ­m: " + sender_email + "\n");
-                Console.WriteLine("Adja meg a fÃ¡jlrendszer gyÃ¶kerÃ©t:");
+                Console.WriteLine("Megfigyelt e-mail cím: " + sender_email + "\n");
+                Console.WriteLine("Adja meg a fájlrendszer gyökerét:");
                 url = Console.ReadLine();
                 dbE.SqliteQueryExecute("DELETE FROM ConnectionSMTP");
                 dbE.SqliteQueryExecute("INSERT INTO ConnectionSMTP ( `mailserver`, `port`, `ssl`, `login`, `password`, `sender_email` ) VALUES ('" + mailserver + "'," + port + "," + ssl + ",'" + login + "','" + password + "','" + sender_email + "')");
