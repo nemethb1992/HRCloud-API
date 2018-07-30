@@ -45,40 +45,43 @@ namespace HRC_Document_Handler
             string setupSmtp = "";
             int count = Convert.ToInt32(dbE.SqliteReaderExecute("SELECT count(mailserver) FROM connectionSMTP"));
             Thread tid1 = new System.Threading.Thread(new ThreadStart(MyThread.Thread1));
-            if (count > 0)
-            {
-                string suspend = "";
-                //Thread tid2 = new Thread(new ThreadStart(MyThread.Thread2));
-                try
+            do {
+                if (count > 0)
                 {
-                    tid1.Start();
+                    string suspend = "";
+                    //Thread tid2 = new Thread(new ThreadStart(MyThread.Thread2));
+                    try
+                    {
+                        tid1.Start();
+                    }
+                    catch (Exception)
+                    {
+                        setup();
+                        tid1.Start();
+                    }
+                    do
+                    {
+                        suspend = Console.ReadLine();
+                        if (suspend == "x")
+                        {
+                            tid1.Suspend();
+                            Console.WriteLine("Suspended");
+                            Console.WriteLine("Press 'y' to start again.");
+                            if (Console.ReadLine() == "y")
+                            {
+                                tid1.Resume();
+                                Console.WriteLine("Started");
+                            }
+                        }
+
+                    } while (suspend != "y" && suspend != "n");
                 }
-                catch (Exception)
+                else
                 {
                     setup();
                     tid1.Start();
                 }
-            //    do { 
-            //    //if (suspend == "x")
-            //    //{
-            //    //    tid1.Suspend();
-            //    //    Console.WriteLine("Suspended");
-            //    //    Console.WriteLine("Press 'y' to start again.");
-            //    //    if (Console.ReadLine() == "y")
-            //    //    {
-            //    //        tid1.Resume();
-            //    //        Console.WriteLine("Started");
-            //    //    }
-            //    //}
-
-            //} while (suspend != "y" && suspend != "n") ;
-            }
-            else
-            {
-                setup();
-                tid1.Start();
-            }
-
+            } while (true);
 
             void setup()
             {
