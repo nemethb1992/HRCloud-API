@@ -38,28 +38,53 @@ namespace HRC_Document_Handler
     {
         public static void Main()
         {
+            dbEntities dbE = new dbEntities();
             Email email = new Email();
             Console.WriteLine("(HR Cloud)\tE-mail API v1.0 - Phoenix Mecano Kecskemét kft.\n");
             int iteration = 0;
             string setupSmtp = "";
-            do
+            int count = Convert.ToInt32(dbE.SqliteReaderExecute("SELECT count(mailserver) FROM connectionSMTP"));
+            Thread tid1 = new System.Threading.Thread(new ThreadStart(MyThread.Thread1));
+            if (count > 0)
             {
-                if (iteration > 0)
+                string suspend = "";
+                //Thread tid2 = new Thread(new ThreadStart(MyThread.Thread2));
+                try
                 {
-                    Console.Clear();
-                    Console.WriteLine("(HR Cloud)\tE-mail API v1.0 - Phoenix Mecano Kecskemét kft.\n");
-                    Console.WriteLine("Try again!!\n");
+                    tid1.Start();
                 }
+                catch (Exception)
+                {
+                    setup();
+                    tid1.Start();
+                }
+            //    do { 
+            //    //if (suspend == "x")
+            //    //{
+            //    //    tid1.Suspend();
+            //    //    Console.WriteLine("Suspended");
+            //    //    Console.WriteLine("Press 'y' to start again.");
+            //    //    if (Console.ReadLine() == "y")
+            //    //    {
+            //    //        tid1.Resume();
+            //    //        Console.WriteLine("Started");
+            //    //    }
+            //    //}
 
-                Console.WriteLine("Setup SMTP connection ( y / n )");
-                setupSmtp = Console.ReadLine();
-                iteration++;
-            } while (setupSmtp != "y" && setupSmtp != "n");
-            if (setupSmtp == "y")
+            //} while (suspend != "y" && suspend != "n") ;
+            }
+            else
             {
-                dbEntities dbE = new dbEntities();
+                setup();
+                tid1.Start();
+            }
+
+
+            void setup()
+            {
                 Console.Clear();
                 Console.WriteLine("(HR Cloud)\tE-mail API v1.0 - Phoenix Mecano Kecskemét kft.\n");
+                Console.WriteLine("Setup SMTP connection!");
 
                 string mailserver, login, password, url, sender_email;
                 int port, ssl;
@@ -90,20 +115,8 @@ namespace HRC_Document_Handler
                 dbE.SqliteQueryExecute("DELETE FROM FolderLocate");
                 dbE.SqliteQueryExecute("INSERT INTO FolderLocate ( `url`, `username`, `password` ) VALUES ('" + url + "','','')");
             }
-            Thread tid1 = new System.Threading.Thread(new ThreadStart(MyThread.Thread1));
-            //Thread tid2 = new Thread(new ThreadStart(MyThread.Thread2));
-            tid1.Start();
-            if (Console.ReadLine() == "x")
-            {
-                tid1.Suspend();
-                Console.WriteLine("Suspended");
-                Console.WriteLine("Press 'y' to start again.");
-                if (Console.ReadLine() == "y")
-                {
-                    tid1.Resume();
-                    Console.WriteLine("Started");
-                }
-            }
+
+
 
 
             //tid2.Start();
