@@ -73,7 +73,6 @@ namespace HRC_Document_Handler.Controller
                              );
             try
             {
-
                 var emailList = mailRepository.GetUnreadMails("inbox");
                 foreach (Message email in emailList)
                 {
