@@ -24,7 +24,7 @@ namespace HRC_Document_Handler.Model
         }
         private void SetupDB()
         {
-            string connectionString = "Data Source = s7.nethely.hu; Initial Catalog = pmkcvtest; User ID=pmkcvtest; Password=pmkcvtest2018";
+            string connectionString = "Data Source = 192.168.144.189; Port=3306; Initial Catalog = pmkcvtest; User ID=hr-admin; Password=pmhr2018";
             conn = new MySqlConnection(connectionString);
         }
         public bool dbOpen()

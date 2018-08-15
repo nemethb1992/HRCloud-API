@@ -62,7 +62,7 @@ namespace HRC_Document_Handler.Controller
 
             string[] seged;
             string path, fileName;
-            byte[] attachment;
+            byte[] attachment = null;
             List<object> attach = new List<object>(); ;
             var mailRepository = new MailRepository(
                                  SMTPdata[0].mailserver,
@@ -80,19 +80,26 @@ namespace HRC_Document_Handler.Controller
                     if (email.From.Email.ToString() == SMTPdata[0].sender_email)
                     {
                         seged = Regex.Split(email.BodyText.Text, "\r\n")[1].Split('-');
-                        attachment = email.Attachments[0].BinaryContent;
-                        fileName = email.Attachments[0].Filename;
-                        path = FolderDataSource()[0].url + "\\" + seged[0] + "\\";
-                        if (seged[0] == "")
-                        {
-                            path = FolderDataSource()[0].url + "\\Without ID\\";
-                        }
                         try
                         {
-                            Directory.CreateDirectory(path);
-                            File.WriteAllBytes(path + fileName, attachment);
+                            attachment = email.Attachments[0].BinaryContent;
+                            fileName = email.Attachments[0].Filename;
+                            path = FolderDataSource()[0].url + "\\" + seged[0] + "\\";
+                            if (seged[0] == "")
+                            {
+                                path = FolderDataSource()[0].url + "\\Without ID\\";
+                            }
+                            try
+                            {
+                                Directory.CreateDirectory(path);
+                                File.WriteAllBytes(path + fileName, attachment);
+                            }
+                            catch { }
                         }
-                        catch { }
+                        catch (Exception)
+                        {
+                        }
+   
                     }
                 }
             }
