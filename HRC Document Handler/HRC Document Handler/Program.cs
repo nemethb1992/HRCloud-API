@@ -29,7 +29,7 @@ namespace HRC_Document_Handler
                 Console.WriteLine("Synchronized - " + date);
                 email.ReadImap();
                 iter++;
-                Thread.Sleep(30000);
+                Thread.Sleep(300000);
             }
 
         }
