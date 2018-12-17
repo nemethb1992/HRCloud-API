@@ -76,6 +76,11 @@ namespace HRC_Document_Handler.Controller
                 var emailList = mailRepository.GetUnreadMails("inbox");
                 foreach (Message email in emailList)
                 {
+                    if (email.From.Email.ToString() == "fzbalu92@gmail.com")
+                    {
+                        Console.WriteLine("Ez a tiéd");
+                    }
+
                     if (email.From.Email.ToString() == SMTPdata[0].sender_email)
                     {
                         seged = Regex.Split(email.BodyText.Text, "\r\n")[1].Split('-');
