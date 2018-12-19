@@ -17,7 +17,7 @@ namespace HRC_Document_Handler
             DateTime date = new DateTime();
             Console.WriteLine("E-Mail Service Active...");
             Email email = new Email();
-            dbEntities dbE = new dbEntities();
+            Model.SQLite dbE = new Model.SQLite();
             int iter = 0;
             while (true)
             {
@@ -38,7 +38,7 @@ namespace HRC_Document_Handler
     {
         public static void Main()
         {
-            dbEntities dbE = new dbEntities();
+            SQLite dbE = new SQLite();
             Email email = new Email();
             Console.WriteLine("(HR Cloud)\tE-mail API v1.0 - Phoenix Mecano Kecskemét kft.\n");
             int iteration = 0;

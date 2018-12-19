@@ -104,8 +104,9 @@
     <Compile Include="Controller\Email.cs" />
     <Compile Include="Controller\Folder.cs" />
     <Compile Include="Controller\Outdated_cont.cs" />
-    <Compile Include="Model\dbEntities.cs" />
-    <Compile Include="Model\dbEntitiesMySQL.cs" />
+    <Compile Include="Controller\Profession.cs" />
+    <Compile Include="Model\SQLite.cs" />
+    <Compile Include="Model\MySql.cs" />
     <Compile Include="Model\MailServer_m.cs" />
     <Compile Include="Model\Outdated_m.cs" />
     <Compile Include="Program.cs" />

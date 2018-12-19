@@ -13,14 +13,14 @@ namespace HRC_Document_Handler.Controller
 {
     class Email
     {
-        private static List<MailServer_m> SMTPdatas;
-        public List<MailServer_m> SMTPdata { get { return SMTPdatas; } set { SMTPdatas = value; } }
+        private static SMTPmodel SMTPdatas;
+        public SMTPmodel SMTPdata { get { return SMTPdatas; } set { SMTPdatas = value; } }
         public Email()
         {
             SMTPdata = MailDataSource();
         }
 
-        dbEntities dbE = new dbEntities();
+        Model.SQLite dbE = new Model.SQLite();
 
         public class MailRepository
         {
@@ -59,39 +59,39 @@ namespace HRC_Document_Handler.Controller
         }
         public void ReadImap()
         {
-
-            string[] seged;
             string path, fileName;
             byte[] attachment = null;
-            List<object> attach = new List<object>(); ;
-            var mailRepository = new MailRepository(
-                                 SMTPdata[0].mailserver,
-                                 SMTPdata[0].port,
-                                 SMTPdata[0].ssl,
-                                 SMTPdata[0].login,
-                                 SMTPdata[0].password
-                             );
+            var mailRepository = new MailRepository(SMTPdata.mailserver, SMTPdata.port, SMTPdata.ssl, SMTPdata.login, SMTPdata.password);
             try
             {
                 var emailList = mailRepository.GetUnreadMails("inbox");
                 foreach (Message email in emailList)
                 {
-                    if (email.From.Email.ToString() == "fzbalu92@gmail.com")
+                    if (email.From.Email.ToString() == "jelentkezes@profession.hu")
                     {
-                        Console.WriteLine("Ez a tiéd");
+                        Profession prof =  new Profession(email.BodyText.Text);
+                        string profId = prof.Insert();
+                        if(profId != null)
+                        {
+                            byte[] attach = email.Attachments[0].BinaryContent;
+                            fileName = email.Attachments[0].Filename;
+                            path = FolderDataSource().url + "\\ProfessionDocuments\\" + profId + "\\";
+                            prof.SaveDocuments(path, fileName, attach);
+                        }
+
                     }
 
-                    if (email.From.Email.ToString() == SMTPdata[0].sender_email)
+                    if (email.From.Email.ToString() == SMTPdata.sender_email)
                     {
-                        seged = Regex.Split(email.BodyText.Text, "\r\n")[1].Split('-');
+                        string seged = Regex.Split(email.BodyText.Text, "\r\n")[1].Split('-')[0];
                         try
                         {
                             attachment = email.Attachments[0].BinaryContent;
                             fileName = email.Attachments[0].Filename;
-                            path = FolderDataSource()[0].url + "\\" + seged[0] + "\\";
-                            if (seged[0] == "")
+                            path = FolderDataSource().url + "\\" + seged + "\\";
+                            if (seged == "")
                             {
-                                path = FolderDataSource()[0].url + "\\Without ID\\";
+                                path = FolderDataSource().url + "\\Without ID\\";
                             }
                             try
                             {
@@ -114,12 +114,12 @@ namespace HRC_Document_Handler.Controller
 
         }
 
-        public List<MailServer_m> MailDataSource()
+        public SMTPmodel MailDataSource()
         {
             string query = "SELECT * FROM ConnectionSMTP";
-            return dbE.ConnectionSMTP_DataSource(query);
+            return dbE.SMTPdata(query);
         }
-        public List<FolderUrl_m> FolderDataSource()
+        public FolderModel FolderDataSource()
         {
             string query = "SELECT * FROM FolderLocate";
             return dbE.Folder_DataSource(query);

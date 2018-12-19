@@ -12,7 +12,7 @@ namespace HRC_Document_Handler.Controller
     {
 
         DateTime dateTime = DateTime.Now;
-        dbEntitiesMySQL dbEMy = new dbEntitiesMySQL();
+        Model.MySql dbEMy = new Model.MySql();
         public List<JeloltExtendedList> JeloltFullDataSource()
         {
 

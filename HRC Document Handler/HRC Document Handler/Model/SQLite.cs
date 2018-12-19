@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace HRC_Document_Handler.Model
 {
-    class dbEntities
+    class SQLite
     {
 
         SQLiteConnection connSqlite;
 
-        public dbEntities()
+        public SQLite()
         {
             SetupDb();
             SqliteReaderExecute("CREATE TABLE IF NOT EXISTS ConnectionSMTP ( `mailserver` TEXT NOT NULL, `port` INTEGER NOT NULL, `ssl` INTEGER NOT NULL DEFAULT 1, `login` TEXT NOT NULL, `password` TEXT NOT NULL, `sender_email` TEXT DEFAULT '' )");
@@ -38,7 +38,7 @@ namespace HRC_Document_Handler.Model
                 return false;
             }
         }
-        private bool dbClose()
+        public bool dbClose()
         {
             try
             {
@@ -80,9 +80,9 @@ namespace HRC_Document_Handler.Model
 
 
         //Specific
-        public List<MailServer_m> ConnectionSMTP_DataSource(string query)
+        public SMTPmodel SMTPdata(string query)
         {
-            List<MailServer_m> list = new List<MailServer_m>();
+            SMTPmodel data = new SMTPmodel();
             if (this.dbOpen() == true)
             {
                 var command = connSqlite.CreateCommand();
@@ -95,7 +95,7 @@ namespace HRC_Document_Handler.Model
                     {
                         ssl = false;
                     }
-                    list.Add(new MailServer_m
+                    data = new SMTPmodel
                     {
                         mailserver = sdr["mailserver"].ToString(),
                         port = Convert.ToInt32(sdr["port"]),
@@ -103,16 +103,16 @@ namespace HRC_Document_Handler.Model
                         login = sdr["login"].ToString(),
                         password = sdr["password"].ToString(),
                         sender_email = sdr["sender_email"].ToString()
-                    });
+                    };
                 }
                 sdr.Close();
                 connSqlite.Close();
             }
-            return list;
+            return data;
         }
-        public List<FolderUrl_m> Folder_DataSource(string query)
+        public FolderModel Folder_DataSource(string query)
         {
-            List<FolderUrl_m> list = new List<FolderUrl_m>();
+            FolderModel data = new FolderModel();
             if (this.dbOpen() == true)
             {
                 var command = connSqlite.CreateCommand();
@@ -120,17 +120,12 @@ namespace HRC_Document_Handler.Model
                 SQLiteDataReader sdr = command.ExecuteReader();
                 while (sdr.Read())
                 {
-                    list.Add(new FolderUrl_m
-                    {
-                        url = sdr["url"].ToString(),
-                        username = sdr["username"].ToString(),
-                        password = sdr["password"].ToString()
-                    });
+                    data = new FolderModel{ url = sdr["url"].ToString() };
                 }
                 sdr.Close();
                 connSqlite.Close();
             }
-            return list;
+            return data;
         }
         
 

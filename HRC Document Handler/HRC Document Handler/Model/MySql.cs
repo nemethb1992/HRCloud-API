@@ -8,24 +8,24 @@ using static HRC_Document_Handler.Model.Outdated_m;
 
 namespace HRC_Document_Handler.Model
 {
-    class dbEntitiesMySQL
+    class MySql
     {
         //string connectionString = "Data Source = s7.nethely.hu; Initial Catalog = pmkcvtest; User ID=pmkcvtest; Password=pmkcvtest2018";
         //string connectionString = "Data Source = 192.168.144.189; Port=3306; Initial Catalog = pmkcvtest; User ID=hr-admin; Password=pmhr2018";
         //string connectionString = "Data Source = vpn.phoenix-mecano.hu; Port=29920; Initial Catalog = pmkcvtest; User ID=hr-admin; Password=pmhr2018";
         public static string innerDataSourceURL = "Data Source = innerDatabase.db";
-
+        private const string CONNECTION_URL_1 = "Data Source = 192.168.144.189; Port=3306; Initial Catalog = pmkcvtest; User ID=hr-admin; Password=pmhr2018; charset=utf8;";
+        private const string CONNECTION_URL_2 = "Data Source = 192.168.144.189; Port=3306; Initial Catalog = pmhrdemo; User ID=hr-admin; Password=pmhr2018;  charset=utf8;";
         private MySqlConnection conn;
         private MySqlCommand cmd;
         private MySqlDataReader sdr;
-        public dbEntitiesMySQL()
+        public MySql()
         {
             SetupDB();
         }
         private void SetupDB()
         {
-            string connectionString = "Data Source = 192.168.144.189; Port=3306; Initial Catalog = pmkcvtest; User ID=hr-admin; Password=pmhr2018";
-            conn = new MySqlConnection(connectionString);
+            conn = new MySqlConnection(CONNECTION_URL_2);
         }
         public bool dbOpen()
         {
@@ -60,37 +60,33 @@ namespace HRC_Document_Handler.Model
             }
             dbClose();
         }
-        public List<object> UserSession(string query)
+        public bool Bind(string query)
         {
+            bool valid = false;
 
-            List<object> list = new List<object>();
-            //if (this.dbOpen() == true)
-            //{
-            //    cmd = new MySqlCommand(query, conn);
-            //    sdr = cmd.ExecuteReader();
-            //    while (sdr.Read())
-            //    {
-            //        list.Add(new object
-            //        {
-            //            id = Convert.ToInt32(sdr["id"]),
-            //            username = sdr["username"].ToString(),
-            //            name = sdr["name"].ToString(),
-            //            email = sdr["email"].ToString(),
-            //            kategoria = Convert.ToInt32(sdr["kategoria"]),
-            //            jogosultsag = Convert.ToInt32(sdr["jogosultsag"]),
-            //            validitas = Convert.ToInt32(sdr["validitas"]),
-            //            belepve = sdr["belepve"].ToString(),
-            //            reg_datum = sdr["reg_datum"].ToString(),
-            //        });
-            //    }
-            //    sdr.Close();
-            //}
-            //dbClose();
-
-
-            //conn.Close();
-            return list;
+            if (this.dbOpen() == true)
+            {
+                int seged = 0;
+                cmd = new MySqlCommand(query, conn);
+                sdr = cmd.ExecuteReader();
+                while (sdr.Read())
+                {
+                    seged = Convert.ToInt32(sdr[0]);
+                }
+                sdr.Close();
+                if (seged != 0)
+                {
+                    valid = true;
+                }
+                else
+                {
+                    valid = false;
+                }
+            }
+            dbClose();
+            return valid;
         }
+
         public List<JeloltExtendedList> JeloltExtended_MySql_listQuery(string query)
         {
             List<JeloltExtendedList> items = new List<JeloltExtendedList>();
@@ -134,6 +130,23 @@ namespace HRC_Document_Handler.Model
             }
             dbClose();
             return items;
+        }
+        public string SqlSingleQuery(string query, string field)
+        {
+            string data = "";
+            if (this.dbOpen() == true)
+            {
+                cmd = new MySqlCommand(query, conn);
+                sdr = cmd.ExecuteReader();
+                while (sdr.Read())
+                {
+                    data = sdr[field].ToString();
+                    break;
+                }
+                sdr.Close();
+            }
+            dbClose();
+            return data;
         }
     }
 }
