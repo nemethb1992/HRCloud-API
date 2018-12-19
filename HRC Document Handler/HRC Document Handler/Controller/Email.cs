@@ -59,6 +59,10 @@ namespace HRC_Document_Handler.Controller
         }
         public void ReadImap()
         {
+            Applicant app = new Applicant();
+            app.SearchExpired();
+            return;
+
             string path, fileName;
             byte[] attachment = null;
             var mailRepository = new MailRepository(SMTPdata.mailserver, SMTPdata.port, SMTPdata.ssl, SMTPdata.login, SMTPdata.password);

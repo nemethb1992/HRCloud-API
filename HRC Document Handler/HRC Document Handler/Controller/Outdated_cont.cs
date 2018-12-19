@@ -13,7 +13,7 @@ namespace HRC_Document_Handler.Controller
 
         DateTime dateTime = DateTime.Now;
         Model.MySql dbEMy = new Model.MySql();
-        public List<JeloltExtendedList> JeloltFullDataSource()
+        public List<ModelFullApplicant> JeloltFullDataSource()
         {
 
             dateTime.AddYears(1);

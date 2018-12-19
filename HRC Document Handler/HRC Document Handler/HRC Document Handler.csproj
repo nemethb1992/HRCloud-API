@@ -101,10 +101,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\Applicant.cs" />
     <Compile Include="Controller\Email.cs" />
     <Compile Include="Controller\Folder.cs" />
     <Compile Include="Controller\Outdated_cont.cs" />
     <Compile Include="Controller\Profession.cs" />
+    <Compile Include="Model\ModelApplicantList.cs" />
     <Compile Include="Model\SQLite.cs" />
     <Compile Include="Model\MySql.cs" />
     <Compile Include="Model\MailServer_m.cs" />

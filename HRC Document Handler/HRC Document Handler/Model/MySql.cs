@@ -87,16 +87,16 @@ namespace HRC_Document_Handler.Model
             return valid;
         }
 
-        public List<JeloltExtendedList> JeloltExtended_MySql_listQuery(string query)
+        public List<ModelFullApplicant> JeloltExtended_MySql_listQuery(string query)
         {
-            List<JeloltExtendedList> items = new List<JeloltExtendedList>();
+            List<ModelFullApplicant> items = new List<ModelFullApplicant>();
             if (this.dbOpen() == true)
             {
                 cmd = new MySqlCommand(query, conn);
                 sdr = cmd.ExecuteReader();
                 while (sdr.Read())
                 {
-                    items.Add(new JeloltExtendedList
+                    items.Add(new ModelFullApplicant
                     {
                         id = Convert.ToInt32(sdr["id"]),
                         nev = sdr["nev"].ToString(),
@@ -131,6 +131,8 @@ namespace HRC_Document_Handler.Model
             dbClose();
             return items;
         }
+
+
         public string SqlSingleQuery(string query, string field)
         {
             string data = "";
