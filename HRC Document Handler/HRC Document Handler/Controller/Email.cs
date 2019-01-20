@@ -59,9 +59,9 @@ namespace HRC_Document_Handler.Controller
         }
         public void ReadImap()
         {
-            Applicant app = new Applicant();
-            app.SearchExpired();
-            return;
+            //Applicant app = new Applicant();
+            //app.SearchExpired();
+            //return;
 
             string path, fileName;
             byte[] attachment = null;
@@ -71,6 +71,7 @@ namespace HRC_Document_Handler.Controller
                 var emailList = mailRepository.GetUnreadMails("inbox");
                 foreach (Message email in emailList)
                 {
+
                     if (email.From.Email.ToString() == "jelentkezes@profession.hu")
                     {
                         Profession prof =  new Profession(email.BodyText.Text);
@@ -82,7 +83,6 @@ namespace HRC_Document_Handler.Controller
                             path = FolderDataSource().url + "\\ProfessionDocuments\\" + profId + "\\";
                             prof.SaveDocuments(path, fileName, attach);
                         }
-
                     }
 
                     if (email.From.Email.ToString() == SMTPdata.sender_email)
@@ -107,7 +107,6 @@ namespace HRC_Document_Handler.Controller
                         catch (Exception)
                         {
                         }
-   
                     }
                 }
             }
@@ -115,7 +114,6 @@ namespace HRC_Document_Handler.Controller
             {
                 Console.WriteLine(e.ToString());
             }
-
         }
 
         public SMTPmodel MailDataSource()

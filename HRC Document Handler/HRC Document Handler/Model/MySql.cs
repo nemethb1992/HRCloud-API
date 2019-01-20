@@ -25,7 +25,7 @@ namespace HRC_Document_Handler.Model
         }
         private void SetupDB()
         {
-            conn = new MySqlConnection(CONNECTION_URL_2);
+            conn = new MySqlConnection(CONNECTION_URL_1);
         }
         public bool dbOpen()
         {
