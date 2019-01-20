@@ -13,7 +13,6 @@ namespace HRC_Document_Handler.Model
         public bool ssl { get; set; }
         public string login { get; set; }
         public string password { get; set; }
-        public string sender_email { get; set; }
     }
     public class FolderModel
     {

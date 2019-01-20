@@ -77,8 +77,6 @@ namespace HRC_Document_Handler.Model
             }
             return data;
         }
-
-
         //Specific
         public SMTPmodel SMTPdata(string query)
         {
@@ -102,7 +100,6 @@ namespace HRC_Document_Handler.Model
                         ssl = ssl,
                         login = sdr["login"].ToString(),
                         password = sdr["password"].ToString(),
-                        sender_email = sdr["sender_email"].ToString()
                     };
                 }
                 sdr.Close();

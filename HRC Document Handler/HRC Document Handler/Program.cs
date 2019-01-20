@@ -17,7 +17,6 @@ namespace HRC_Document_Handler
             DateTime date = new DateTime();
             Console.WriteLine("E-Mail Service Active...");
             Email email = new Email();
-            Model.SQLite dbE = new Model.SQLite();
             int iter = 0;
             while (true)
             {
@@ -38,12 +37,11 @@ namespace HRC_Document_Handler
     {
         public static void Main()
         {
-            SQLite dbE = new SQLite();
             Email email = new Email();
             Console.WriteLine("(HR Cloud)\tE-mail API v1.0 - Phoenix Mecano Kecskemét kft.\n");
             int iteration = 0;
             string setupSmtp = "";
-            int count = Convert.ToInt32(dbE.SqliteReaderExecute("SELECT count(mailserver) FROM connectionSMTP"));
+            int count = Convert.ToInt32(new Model.MySql().SqlSingleQuery("SELECT count(mailserver) as count FROM ConnectionSMTP", "count"));
             Thread tid1 = new System.Threading.Thread(new ThreadStart(MyThread.Thread1));
             do {
                 if (count > 0)
@@ -113,10 +111,10 @@ namespace HRC_Document_Handler
                 Console.WriteLine("Megfigyelt e-mail cím: " + sender_email + "\n");
                 Console.WriteLine("Adja meg a fájlrendszer gyökerét:");
                 url = Console.ReadLine();
-                dbE.SqliteQueryExecute("DELETE FROM ConnectionSMTP");
-                dbE.SqliteQueryExecute("INSERT INTO ConnectionSMTP ( `mailserver`, `port`, `ssl`, `login`, `password`, `sender_email` ) VALUES ('" + mailserver + "'," + port + "," + ssl + ",'" + login + "','" + password + "','" + sender_email + "')");
-                dbE.SqliteQueryExecute("DELETE FROM FolderLocate");
-                dbE.SqliteQueryExecute("INSERT INTO FolderLocate ( `url`, `username`, `password` ) VALUES ('" + url + "','','')");
+                //dbE.SqliteQueryExecute("DELETE FROM ConnectionSMTP");
+                //dbE.SqliteQueryExecute("INSERT INTO ConnectionSMTP ( `mailserver`, `port`, `ssl`, `login`, `password`, `sender_email` ) VALUES ('" + mailserver + "'," + port + "," + ssl + ",'" + login + "','" + password + "','" + sender_email + "')");
+                //dbE.SqliteQueryExecute("DELETE FROM FolderLocate");
+                //dbE.SqliteQueryExecute("INSERT INTO FolderLocate ( `url`, `username`, `password` ) VALUES ('" + url + "','','')");
             }
 
 

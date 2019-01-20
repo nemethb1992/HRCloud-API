@@ -8,7 +8,7 @@ using static HRC_Document_Handler.Model.Outdated_m;
 
 namespace HRC_Document_Handler.Model
 {
-    class MySql
+    public class MySql
     {
         //string connectionString = "Data Source = s7.nethely.hu; Initial Catalog = pmkcvtest; User ID=pmkcvtest; Password=pmkcvtest2018";
         //string connectionString = "Data Source = 192.168.144.189; Port=3306; Initial Catalog = pmkcvtest; User ID=hr-admin; Password=pmhr2018";
@@ -144,6 +144,74 @@ namespace HRC_Document_Handler.Model
                 {
                     data = sdr[field].ToString();
                     break;
+                }
+                sdr.Close();
+            }
+            dbClose();
+            return data;
+        }
+        
+        public SMTPmodel SMTPdataIMAP()
+        {
+            SMTPmodel data = null;
+            if (this.dbOpen() == true)
+            {
+                cmd = new MySqlCommand("SELECT * FROM ConnectionSMTP WHERE type = 'imap'", conn);
+                sdr = cmd.ExecuteReader();
+                while (sdr.Read())
+                {
+                    bool ssl = true;
+                    if (Convert.ToInt32(sdr["ssl"]) == 0)
+                    {
+                        ssl = false;
+                    }
+                    data = new SMTPmodel
+                    {
+                        mailserver = sdr["mailserver"].ToString(),
+                        port = Convert.ToInt32(sdr["port"]),
+                        ssl = ssl,
+                        login = sdr["login"].ToString(),
+                        password = "pmhr2018"
+                    };
+                }
+                sdr.Close();
+            }
+            dbClose();
+            return data;
+        }
+
+        public FolderModel ApplicantURL()
+        {
+            FolderModel data = null;
+            if (this.dbOpen() == true)
+            {
+                cmd = new MySqlCommand("SELECT * FROM ROOTurl WHERE id = 0", conn);
+                sdr = cmd.ExecuteReader();
+                while (sdr.Read())
+                {
+                    data = new FolderModel
+                    {
+                        url = sdr["url"].ToString(),
+                    };
+                }
+                sdr.Close();
+            }
+            dbClose();
+            return data;
+        }
+        public FolderModel ProfessionURL()
+        {
+            FolderModel data = null;
+            if (this.dbOpen() == true)
+            {
+                cmd = new MySqlCommand("SELECT * FROM ROOTurl WHERE id = 1", conn);
+                sdr = cmd.ExecuteReader();
+                while (sdr.Read())
+                {
+                    data = new FolderModel
+                    {
+                        url = sdr["url"].ToString(),
+                    };
                 }
                 sdr.Close();
             }

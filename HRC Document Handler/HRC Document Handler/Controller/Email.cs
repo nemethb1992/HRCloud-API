@@ -15,12 +15,12 @@ namespace HRC_Document_Handler.Controller
     {
         private static SMTPmodel SMTPdatas;
         public SMTPmodel SMTPdata { get { return SMTPdatas; } set { SMTPdatas = value; } }
+        Model.MySql mySql = new Model.MySql();
+
         public Email()
         {
-            SMTPdata = MailDataSource();
+            SMTPdata = mySql.SMTPdataIMAP();
         }
-
-        Model.SQLite dbE = new Model.SQLite();
 
         public class MailRepository
         {
@@ -80,22 +80,22 @@ namespace HRC_Document_Handler.Controller
                         {
                             byte[] attach = email.Attachments[0].BinaryContent;
                             fileName = email.Attachments[0].Filename;
-                            path = FolderDataSource().url + "\\ProfessionDocuments\\" + profId + "\\";
+                            path = mySql.ProfessionURL() + profId + "\\";
                             prof.SaveDocuments(path, fileName, attach);
                         }
                     }
 
-                    if (email.From.Email.ToString() == SMTPdata.sender_email)
+                    if (email.From.Email.ToString() == "jelentkezes@phoenix-mecano.hu")
                     {
                         string seged = Regex.Split(email.BodyText.Text, "\r\n")[1].Split('-')[0];
                         try
                         {
                             attachment = email.Attachments[0].BinaryContent;
                             fileName = email.Attachments[0].Filename;
-                            path = FolderDataSource().url + "\\" + seged + "\\";
+                            path = mySql.ApplicantURL() + seged + "\\";
                             if (seged == "")
                             {
-                                path = FolderDataSource().url + "\\Without ID\\";
+                                path = mySql.ApplicantURL() + "Without ID\\";
                             }
                             try
                             {
@@ -116,15 +116,5 @@ namespace HRC_Document_Handler.Controller
             }
         }
 
-        public SMTPmodel MailDataSource()
-        {
-            string query = "SELECT * FROM ConnectionSMTP";
-            return dbE.SMTPdata(query);
-        }
-        public FolderModel FolderDataSource()
-        {
-            string query = "SELECT * FROM FolderLocate";
-            return dbE.Folder_DataSource(query);
-        }
     }
 }

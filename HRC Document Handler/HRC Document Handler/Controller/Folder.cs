@@ -10,7 +10,7 @@ namespace HRC_Document_Handler.Controller
 {
     class Folder
     {
-        Model.SQLite dbE = new Model.SQLite();
+        //Model.SQLite dbE = new Model.SQLite();
 
         //public List<Jelolt_File_Struct> Applicant_FolderReadOut(int ApplicantID)
         //{
