@@ -68,7 +68,7 @@ namespace HRC_Document_Handler.Controller
             var mailRepository = new MailRepository(SMTPdata.mailserver, SMTPdata.port, SMTPdata.ssl, SMTPdata.login, SMTPdata.password);
             try
             {
-                var emailList = mailRepository.GetUnreadMails("inbox");
+                var emailList = mailRepository.GetUnreadMails("INBOX");
                 foreach (Message email in emailList)
                 {
 
@@ -85,29 +85,29 @@ namespace HRC_Document_Handler.Controller
                         }
                     }
 
-                    if (email.From.Email.ToString() == "jelentkezes@phoenix-mecano.hu")
-                    {
-                        string seged = Regex.Split(email.BodyText.Text, "\r\n")[1].Split('-')[0];
-                        try
-                        {
-                            attachment = email.Attachments[0].BinaryContent;
-                            fileName = email.Attachments[0].Filename;
-                            path = mySql.ApplicantURL() + seged + "\\";
-                            if (seged == "")
-                            {
-                                path = mySql.ApplicantURL() + "Without ID\\";
-                            }
-                            try
-                            {
-                                Directory.CreateDirectory(path);
-                                File.WriteAllBytes(path + fileName, attachment);
-                            }
-                            catch { }
-                        }
-                        catch (Exception)
-                        {
-                        }
-                    }
+                    //if (email.From.Email.ToString() == "jelentkezes@phoenix-mecano.hu")
+                    //{
+                    //    string seged = Regex.Split(email.BodyText.Text, "\r\n")[1].Split('-')[0];
+                    //    try
+                    //    {
+                    //        attachment = email.Attachments[0].BinaryContent;
+                    //        fileName = email.Attachments[0].Filename;
+                    //        path = mySql.ApplicantURL() + seged + "\\";
+                    //        if (seged == "")
+                    //        {
+                    //            path = mySql.ApplicantURL() + "Without ID\\";
+                    //        }
+                    //        try
+                    //        {
+                    //            Directory.CreateDirectory(path);
+                    //            File.WriteAllBytes(path + fileName, attachment);
+                    //        }
+                    //        catch { }
+                    //    }
+                    //    catch (Exception)
+                    //    {
+                    //    }
+                    //}
                 }
             }
             catch (Exception e)
