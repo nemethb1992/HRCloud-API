@@ -19,10 +19,10 @@ namespace HRC_Document_Handler.Controller
         {
             if (!rawEmail.Equals(null))
             {
-                name = Regex.Split(Regex.Split(rawEmail, "Név: \\*")[1], "\\*")[0];
-                email = Regex.Split(rawEmail, "E-mail: \\*")[1].Split(null)[0];
-                telephone = Regex.Split(rawEmail, "Telefonszám: ")[1].Split(null)[0];
-                project = Regex.Split(Regex.Split(rawEmail, "Pozíció/cég: \\*")[1], "\\*")[0];
+                name = Regex.Split(Regex.Split(rawEmail, "Név: <b>")[1], "</b>")[0]; 
+                email = Regex.Split(Regex.Split(rawEmail, "<a href=\"mailto:")[1], "\" style")[0];
+                telephone = Regex.Split(Regex.Split(rawEmail, "Telefonszám: ")[1], "<br")[0];
+                project = Regex.Split(Regex.Split(rawEmail, "Pozíció/cég: <b>")[1], "</b>")[0];
             }
         }
 
@@ -45,6 +45,10 @@ namespace HRC_Document_Handler.Controller
                 "VALUES(NULL, '" + name + "',  '" + email + "', '" + telephone + "', '"+project+"', '"+ localDate.ToString("yyyy.MM.dd") + "');";
                 mySql.MysqlQueryExecute(command);
                 id = mySql.SqlSingleQuery("SELECT id FROM profession_jeloltek WHERE email='" + email + "'", "id");
+            }
+            else
+            {
+                id = mySql.SqlSingleQuery("SELECT id FROM profession_jeloltek WHERE email = '" + email + "'", "id");
             }
             return id;
             //command = "SELECT jeloltek.id FROM jeloltek WHERE jeloltek.email = '" + items[0].email + "' AND jeloltek.nev = '" + items[0].nev + "'";

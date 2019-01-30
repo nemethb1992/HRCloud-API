@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Deployment;
 
 namespace HRC_Document_Handler
 {
@@ -38,7 +39,9 @@ namespace HRC_Document_Handler
         public static void Main()
         {
             Email email = new Email();
-            Console.WriteLine("(HR Cloud)\tE-mail API v1.0 - Phoenix Mecano Kecskemét kft.\n");
+            Version myVersion;
+            
+            Console.WriteLine("(HR Cloud)\tE-mail API v1.0.0.2 - Phoenix Mecano Kecskemét kft.\n");
             int iteration = 0;
             string setupSmtp = "";
             int count = Convert.ToInt32(new Model.MySql().SqlSingleQuery("SELECT count(mailserver) as count FROM ConnectionSMTP", "count"));

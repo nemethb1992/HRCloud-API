@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,9 +28,14 @@ namespace HRC_Document_Handler.Controller
                 DateTime oneYear = DateTime.Today.AddYears(-1);
                 if(oneYear > applicantDate)
                 Console.WriteLine(applicantDate + "  " + oneYear);
-
             }
             return 0;
         }
+        public void SaveDocuments(string path, string fileName, byte[] file)
+        {
+            Directory.CreateDirectory(path);
+            File.WriteAllBytes(path + fileName, file);
+        }
+
     }
 }
