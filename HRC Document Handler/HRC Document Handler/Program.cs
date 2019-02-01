@@ -39,7 +39,6 @@ namespace HRC_Document_Handler
         public static void Main()
         {
             Email email = new Email();
-            Version myVersion;
             
             Console.WriteLine("(HR Cloud)\tE-mail API v1.0.0.2 - Phoenix Mecano Kecskemét kft.\n");
             int iteration = 0;

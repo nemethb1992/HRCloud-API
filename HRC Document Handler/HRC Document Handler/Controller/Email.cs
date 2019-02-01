@@ -26,9 +26,9 @@ namespace HRC_Document_Handler.Controller
             SMTPdata = mySql.SMTPdataIMAP();
         }
 
-        public List<MimeKit.MimeMessage> GetUnreadMails()
+        public List<MimeMessage> GetUnreadMails()
         {
-            var messages = new List<MimeKit.MimeMessage>();
+            var messages = new List<MimeMessage>();
 
             using (var client = new ImapClient())
             {
@@ -39,8 +39,8 @@ namespace HRC_Document_Handler.Controller
                 client.Authenticate(SMTPdata.login, SMTPdata.password);
                 
                 var inbox = client.Inbox;
-                inbox.Open(FolderAccess.ReadOnly);
-                var results = inbox.Search(SearchOptions.All, SearchQuery.Not(SearchQuery.Seen));
+                inbox.Open(FolderAccess.ReadWrite);
+                var results = inbox.Search(SearchOptions.All, SearchQuery.NotSeen);
                 foreach (var uniqueId in results.UniqueIds)
                 {
                     MimeMessage message = inbox.GetMessage(uniqueId);
@@ -61,6 +61,7 @@ namespace HRC_Document_Handler.Controller
             try
             {
                 List<MimeMessage> emailList = GetUnreadMails();
+                Console.WriteLine("Email-ek száma: "+emailList.Count.ToString());
                 foreach (MimeMessage email in emailList)
                 { 
                     string from = (email.From.ToString().Split('<')[1]).Split('>')[0];
@@ -107,29 +108,6 @@ namespace HRC_Document_Handler.Controller
                             }
                     }
 
-                    //if (email.From.Email.ToString() == "jelentkezes@phoenix-mecano.hu")
-                    //{
-                    //    string seged = Regex.Split(email.BodyText.Text, "\r\n")[1].Split('-')[0];
-                    //    try
-                    //    {
-                    //        attachment = email.Attachments[0].BinaryContent;
-                    //        fileName = email.Attachments[0].Filename;
-                    //        path = mySql.ApplicantURL() + seged + "\\";
-                    //        if (seged == "")
-                    //        {
-                    //            path = mySql.ApplicantURL() + "Without ID\\";
-                    //        }
-                    //        try
-                    //        {
-                    //            Directory.CreateDirectory(path);
-                    //            File.WriteAllBytes(path + fileName, attachment);
-                    //        }
-                    //        catch { }
-                    //    }
-                    //    catch (Exception)
-                    //    {
-                    //    }
-                    //}
                 }
             }
             catch (Exception e)
