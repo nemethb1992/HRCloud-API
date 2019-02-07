@@ -12,7 +12,7 @@ namespace HRC_Document_Handler
 {
     public class MyThread
     {
-        public static void Thread1()
+        public static void MainThread()
         {
 
             DateTime date = new DateTime();
@@ -44,7 +44,7 @@ namespace HRC_Document_Handler
             int iteration = 0;
             string setupSmtp = "";
             int count = Convert.ToInt32(new Model.MySql().SqlSingleQuery("SELECT count(mailserver) as count FROM ConnectionSMTP", "count"));
-            Thread tid1 = new System.Threading.Thread(new ThreadStart(MyThread.Thread1));
+            Thread tid1 = new System.Threading.Thread(new ThreadStart(MyThread.MainThread));
             do {
                 if (count > 0)
                 {

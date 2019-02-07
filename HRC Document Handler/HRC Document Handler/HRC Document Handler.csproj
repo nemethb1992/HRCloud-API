@@ -155,6 +155,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\Applicant.cs" />
+    <Compile Include="Controller\DatabaseSynchronizer.cs" />
     <Compile Include="Controller\Email.cs" />
     <Compile Include="Controller\Folder.cs" />
     <Compile Include="Controller\Outdated_cont.cs" />
