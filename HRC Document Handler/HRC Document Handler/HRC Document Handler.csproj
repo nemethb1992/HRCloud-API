@@ -161,8 +161,9 @@
     <Compile Include="Controller\Outdated_cont.cs" />
     <Compile Include="Controller\Profession.cs" />
     <Compile Include="Model\ModelApplicantList.cs" />
-    <Compile Include="Model\SQLite.cs" />
-    <Compile Include="Model\MySql.cs" />
+    <Compile Include="Utils\ConsoleRender.cs" />
+    <Compile Include="Utils\SQLite.cs" />
+    <Compile Include="Utils\MySql.cs" />
     <Compile Include="Model\MailServer_m.cs" />
     <Compile Include="Model\Outdated_m.cs" />
     <Compile Include="Program.cs" />
@@ -172,6 +173,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Threads\DbSynchroThread.cs" />
+    <Compile Include="Threads\ImapThread.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
