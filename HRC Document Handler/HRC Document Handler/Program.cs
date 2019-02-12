@@ -19,7 +19,9 @@ namespace HRC_Document_Handler
         {
             ConsoleRender cr = new ConsoleRender();
             Console.WriteLine(cr.header());
-            int count = Convert.ToInt32(new Model.MySql().SqlSingleQuery("SELECT count(mailserver) as count FROM ConnectionSMTP", "count"));
+            Model.MySql mySql = new Model.MySql();
+            int count = Convert.ToInt32(mySql.SqlSingleQuery("SELECT count(mailserver) as count FROM ConnectionSMTP", "count"));
+            mySql.dbClose();
             Thread mailThread = new System.Threading.Thread(new ThreadStart(ImapThread.getMail));
             Thread dbThread = new System.Threading.Thread(new ThreadStart(DbSynchroThread.synchronize));
             do {

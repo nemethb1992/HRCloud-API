@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,30 +14,46 @@ namespace HRC_Document_Handler.Model
         //string connectionString = "Data Source = s7.nethely.hu; Initial Catalog = pmkcvtest; User ID=pmkcvtest; Password=pmkcvtest2018";
         //string connectionString = "Data Source = 192.168.144.189; Port=3306; Initial Catalog = pmkcvtest; User ID=hr-admin; Password=pmhr2018";
         //string connectionString = "Data Source = vpn.phoenix-mecano.hu; Port=29920; Initial Catalog = pmkcvtest; User ID=hr-admin; Password=pmhr2018";
-        public static string innerDataSourceURL = "Data Source = innerDatabase.db";
         private const string CONNECTION_URL_1 = "Data Source = 192.168.144.189; Port=3306; Initial Catalog = pmkcvtest; User ID=hr-admin; Password=pmhr2018; charset=utf8;";
         private const string CONNECTION_URL_2 = "Data Source = 192.168.144.189; Port=3306; Initial Catalog = pmhrdemo; User ID=hr-admin; Password=pmhr2018;  charset=utf8;";
-        private const string WEB_DATABASE_CONNECTION = "Data Source = mysql.nethely.hu; Port=3306; Initial Catalog = hrportalweb; User ID=hr-hrportalweb; Password=pmhr2018!;  charset=utf8;";
-        private MySqlConnection conn;
-        private MySqlCommand cmd;
-        private MySqlDataReader sdr;
+        private const string WEB_DATABASE_CONNECTION = "Data Source = mysql.nethely.hu; Port=3306; Initial Catalog = hrportalweb; User ID=hrportalweb; Password=pmhr2018!;  charset=utf8;";
+
+        public MySqlConnection conn;
+        public MySqlCommand cmd;
+        public MySqlDataReader sdr;
+
         public MySql(bool publicDb = false)
         {
-            conn = new MySqlConnection((publicDb ? WEB_DATABASE_CONNECTION : CONNECTION_URL_1));
+            if (conn == null)
+            {
+                try
+                {
+                    conn = new MySqlConnection((publicDb ? WEB_DATABASE_CONNECTION : CONNECTION_URL_1));
+                }
+                catch (MySqlException mysqlex)
+                {
+                    Console.WriteLine(mysqlex.ToString());
+                    throw;
+                }
+            }
         }
         public bool dbOpen()
         {
             try
             {
-                conn.Open();
+                if (conn.State == ConnectionState.Closed)
+                {
+                    conn.Open();
+                }
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return false;
             }
         }
-        private bool dbClose()
+        public bool dbClose()
         {
             try
             {
@@ -48,7 +65,7 @@ namespace HRC_Document_Handler.Model
                 return false;
             }
         }
-        public void MysqlQueryExecute(string query)
+        public void execute(string query)
         {
             if (this.dbOpen() == true)
             {
@@ -57,7 +74,30 @@ namespace HRC_Document_Handler.Model
             }
             dbClose();
         }
-        public bool Bind(string query)
+
+  
+
+        public List<string> uniqueList(string command, string table, int b)
+        {
+            List<string> dataSource = new List<string>();
+            if (dbOpen() == true)
+            {
+                cmd = new MySqlCommand(command, conn);
+                sdr = cmd.ExecuteReader();
+                int i;
+                while (sdr.Read())
+                {
+                    for (i = 0; i < b; i++)
+                    {
+                        dataSource.Add(sdr[i].ToString());
+                    }
+                }
+                sdr.Close();
+            }
+            return dataSource;
+        }
+
+        public bool bind(string query)
         {
             bool valid = false;
 
@@ -80,7 +120,6 @@ namespace HRC_Document_Handler.Model
                     valid = false;
                 }
             }
-            dbClose();
             return valid;
         }
 
@@ -125,7 +164,6 @@ namespace HRC_Document_Handler.Model
                 }
                 sdr.Close();
             }
-            dbClose();
             return items;
         }
 
@@ -144,7 +182,6 @@ namespace HRC_Document_Handler.Model
                 }
                 sdr.Close();
             }
-            dbClose();
             return data;
         }
         
@@ -173,7 +210,6 @@ namespace HRC_Document_Handler.Model
                 }
                 sdr.Close();
             }
-            dbClose();
             return data;
         }
 
@@ -193,7 +229,6 @@ namespace HRC_Document_Handler.Model
                 }
                 sdr.Close();
             }
-            dbClose();
             return data;
         }
         public FolderModel ProfessionURL()
@@ -212,7 +247,6 @@ namespace HRC_Document_Handler.Model
                 }
                 sdr.Close();
             }
-            dbClose();
             return data;
         }
     }

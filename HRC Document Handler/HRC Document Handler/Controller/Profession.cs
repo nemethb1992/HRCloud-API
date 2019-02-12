@@ -38,17 +38,19 @@ namespace HRC_Document_Handler.Controller
         {
             string id = null;
             Model.MySql mySql = new Model.MySql();
-            if (!mySql.Bind("SELECT count(id) FROM jeloltek WHERE email='" + email + "'") && !mySql.Bind("SELECT count(id) FROM profession_jeloltek WHERE email='" + email + "'"))
+            if (!mySql.bind("SELECT count(id) FROM jeloltek WHERE email='" + email + "'") && !mySql.bind("SELECT count(id) FROM profession_jeloltek WHERE email='" + email + "'"))
             {
                 DateTime localDate = DateTime.Now;
                 string command = "INSERT INTO profession_jeloltek (`id`, `nev`, `email`, `telefon`, `projekt`, `reg_date`) " +
                 "VALUES(NULL, '" + name + "',  '" + email + "', '" + telephone + "', '"+project+"', '"+ localDate.ToString("yyyy.MM.dd") + "');";
-                mySql.MysqlQueryExecute(command);
+                mySql.execute(command);
                 id = mySql.SqlSingleQuery("SELECT id FROM profession_jeloltek WHERE email='" + email + "'", "id");
+                mySql.dbClose();
             }
             else
             {
                 id = mySql.SqlSingleQuery("SELECT id FROM profession_jeloltek WHERE email = '" + email + "'", "id");
+                mySql.dbClose();
             }
             return id;
             //command = "SELECT jeloltek.id FROM jeloltek WHERE jeloltek.email = '" + items[0].email + "' AND jeloltek.nev = '" + items[0].nev + "'";

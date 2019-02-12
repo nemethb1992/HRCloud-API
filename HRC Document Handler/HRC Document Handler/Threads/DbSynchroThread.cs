@@ -1,4 +1,5 @@
-﻿using HRC_Document_Handler.Utils;
+﻿using HRC_Document_Handler.Controller;
+using HRC_Document_Handler.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,7 @@ namespace HRC_Document_Handler.Threads
                 Console.WriteLine("Press 'x' to pause.\n");
                 Console.WriteLine("Progess:\n");
                 Console.WriteLine("Synchronized 2 - " + date);
-                //email.ReadImap();
+                new DatabaseSynchronizer();
                 iter++;
                 Thread.Sleep(1000);
             }

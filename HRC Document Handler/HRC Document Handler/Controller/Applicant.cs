@@ -31,10 +31,28 @@ namespace HRC_Document_Handler.Controller
             }
             return 0;
         }
-        public void SaveDocuments(string path, string fileName, byte[] file)
+
+
+        public static void SaveDocument(string path, string fileName, byte[] file)
         {
             Directory.CreateDirectory(path);
-            File.WriteAllBytes(path + fileName, file);
+            File.WriteAllBytes(path + fileName, file.ToArray());
+        }
+
+        ///<summary>
+        ///<para>Visszatér az adott e-mail címhez tartozó jelölt id-vel.</para>
+        ///<para>Ha nem szerepel az adott cím a táblában, 0-val tér vissza.</para> 
+        ///<returns>return string</returns>
+        ///</summary>
+        public static string isExists(string email, bool publicDb = false)
+        {
+            string id = null;
+            Model.MySql mySql = new Model.MySql(publicDb);
+            if (mySql.bind("SELECT count(id) FROM jeloltek WHERE email='" + email + "'"))
+            {
+                id = mySql.SqlSingleQuery("SELECT id FROM jeloltek WHERE email='" + email + "'","id");
+            }
+            return id;
         }
 
     }

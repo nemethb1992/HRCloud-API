@@ -160,7 +160,8 @@
     <Compile Include="Controller\Folder.cs" />
     <Compile Include="Controller\Outdated_cont.cs" />
     <Compile Include="Controller\Profession.cs" />
-    <Compile Include="Model\ModelApplicantList.cs" />
+    <Compile Include="Model\ApplicantModel.cs" />
+    <Compile Include="Model\DocumentModel.cs" />
     <Compile Include="Utils\ConsoleRender.cs" />
     <Compile Include="Utils\SQLite.cs" />
     <Compile Include="Utils\MySql.cs" />
@@ -175,6 +176,7 @@
     </Compile>
     <Compile Include="Threads\DbSynchroThread.cs" />
     <Compile Include="Threads\ImapThread.cs" />
+    <Compile Include="Utils\Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

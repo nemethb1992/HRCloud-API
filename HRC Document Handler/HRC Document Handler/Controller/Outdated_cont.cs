@@ -1,10 +1,6 @@
 ﻿using HRC_Document_Handler.Model;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static HRC_Document_Handler.Model.Outdated_m;
 
 namespace HRC_Document_Handler.Controller
 {
@@ -36,7 +32,9 @@ namespace HRC_Document_Handler.Controller
                 "coalesce((SELECT vegzettsegek.id FROM vegzettsegek WHERE vegzettsegek.id = jeloltek.vegz_terulet),0) AS id_vegz_terulet " +
                 "FROM jeloltek WHERE reg_date ";
             //string query = "SELECT * FROM jeloltek INNER JOIN nyelv on jeloltek.nyelvtudas = nyelv.id INNER JOIN munkakor on jeloltek.munkakor = munkakor.id INNER JOIN ertesulesek ON jeloltek.ertesult = ertesulesek.id WHERE jeloltek.id = " + ApplicantID + "";
-            return dbEMy.JeloltExtended_MySql_listQuery(query);
+            List<ModelFullApplicant> data = dbEMy.JeloltExtended_MySql_listQuery(query);
+            dbEMy.dbClose();
+            return data;
         }
     }
 }

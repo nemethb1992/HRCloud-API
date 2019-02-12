@@ -24,6 +24,7 @@ namespace HRC_Document_Handler.Controller
         public Email()
         {
             SMTPdata = mySql.SMTPdataIMAP();
+            mySql.dbClose();
         }
 
         public List<MimeMessage> GetUnreadMails()
@@ -58,6 +59,7 @@ namespace HRC_Document_Handler.Controller
         {
             string appURL = mySql.ApplicantURL().url;
             string profURl = mySql.ProfessionURL().url;
+            mySql.dbClose();
             try
             {
                 List<MimeMessage> emailList = GetUnreadMails();
@@ -65,6 +67,7 @@ namespace HRC_Document_Handler.Controller
                 foreach (MimeMessage email in emailList)
                 { 
                     string from = (email.From.ToString().Split('<')[1]).Split('>')[0];
+
                     if (from.Equals("jelentkezes@profession.hu"))
                     {
                         string seged = email.HtmlBody.ToString();
@@ -72,7 +75,6 @@ namespace HRC_Document_Handler.Controller
                         string profId = prof.Insert();
                         if (profId != null)
                         {
-
                             string path = profURl + profId + "\\";
                             foreach (MimePart mimePart in email.Attachments)
                             {
@@ -90,8 +92,7 @@ namespace HRC_Document_Handler.Controller
                     {
                         string seged = Regex.Split(email.HtmlBody, "\r\n")[1].Split('-')[0];
 
-
-                        Applicant applicant = new Applicant();
+                        //Applicant applicant = new Applicant();
                             string path = appURL + seged + "\\";
                             foreach (MimePart mimePart in email.Attachments)
                             {
@@ -103,7 +104,7 @@ namespace HRC_Document_Handler.Controller
                                 }
                                 mimePart.Content.DecodeTo(memory);
                                     var bytes = memory.ToArray();
-                                    applicant.SaveDocuments(path, mimePart.FileName, bytes);
+                                Applicant.SaveDocument(path, mimePart.FileName, bytes);
                                 }
                             }
                     }
