@@ -38,12 +38,12 @@ namespace HRC_Document_Handler.Model
             return list;
         }
 
-        public void deleteDocumentWeb(string documentName)
+        public void deleteDocumentWeb(string email)
         {
             MySql mySql = new MySql(true);
             try
             {
-                string command = "DELETE FROM csatolmanyok WHERE csatolmanyok.document_name = '" + documentName + "';";
+                string command = "DELETE FROM csatolmanyok WHERE csatolmanyok.email = '" + email + "';";
                 mySql.execute(command);
             }
             catch (Exception)

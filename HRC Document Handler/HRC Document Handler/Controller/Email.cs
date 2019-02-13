@@ -66,29 +66,29 @@ namespace HRC_Document_Handler.Controller
                 Console.WriteLine("Email-ek száma: "+emailList.Count.ToString());
                 foreach (MimeMessage email in emailList)
                 { 
-                    string from = (email.From.ToString().Split('<')[1]).Split('>')[0];
+                    //string from = (email.From.ToString().Split('<')[1]).Split('>')[0];
 
-                    if (from.Equals("jelentkezes@profession.hu"))
-                    {
-                        string seged = email.HtmlBody.ToString();
-                        Profession prof = new Profession(email.HtmlBody.ToString());
-                        string profId = prof.Insert();
-                        if (profId != null)
-                        {
-                            string path = profURl + profId + "\\";
-                            foreach (MimePart mimePart in email.Attachments)
-                            {
-                                using (var memory = new MemoryStream())
-                                {
-                                    mimePart.Content.DecodeTo(memory);
-                                    var bytes = memory.ToArray();
-                                    prof.SaveDocuments(path, mimePart.FileName, bytes);
-                                }
-                            }
-                        }
-                    }
+                    //if (from.Equals("jelentkezes@profession.hu"))
+                    //{
+                    //    string seged = email.HtmlBody.ToString();
+                    //    Profession prof = new Profession(email.HtmlBody.ToString());
+                    //    string profId = prof.Insert();
+                    //    if (profId != null)
+                    //    {
+                    //        string path = profURl + profId + "\\";
+                    //        foreach (MimePart mimePart in email.Attachments)
+                    //        {
+                    //            using (var memory = new MemoryStream())
+                    //            {
+                    //                mimePart.Content.DecodeTo(memory);
+                    //                var bytes = memory.ToArray();
+                    //                prof.SaveDocuments(path, mimePart.FileName, bytes);
+                    //            }
+                    //        }
+                    //    }
+                    //}
 
-                    if (from.Equals("jelentkezes@phoenix-mecano.hu"))
+                    if (email.From.Equals("jelentkezes@phoenix-mecano.hu"))
                     {
                         string seged = Regex.Split(email.HtmlBody, "\r\n")[1].Split('-')[0];
 

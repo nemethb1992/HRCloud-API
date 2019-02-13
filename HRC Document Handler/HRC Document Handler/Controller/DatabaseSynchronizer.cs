@@ -30,6 +30,11 @@ namespace HRC_Document_Handler.Controller
                     int applicantID = applicant.Insert();
                     if(applicantID != 0)
                     {
+                        List<ProjectConnectionModel> connectedProjects = ProjectConnectionModel.getListWeb("SELECT * FROM projekt_jelolt_kapcs WHERE email = '"+applicant.email+"'");
+                        foreach (var projects in connectedProjects)
+                        {
+                            ProjectConnectionModel.insertDb(projects,applicantID);
+                        }
                         //TODO: email kiküldése
                         applicant.deleteWeb(applicant.email);
                         List<DocumentModel> docList = DocumentModel.GetDocuments(applicant.email);
@@ -37,12 +42,11 @@ namespace HRC_Document_Handler.Controller
                         foreach (var doc in docList)
                         {
                             Applicant.SaveDocument(path, doc.document_name,doc.document);
-                            doc.deleteDocumentWeb(doc.document_name);
+                            doc.deleteDocumentWeb(applicant.email);
                         }
                     }
                 }
             }
-
             mySql.dbClose();
             mySqlWeb.dbClose();
         }

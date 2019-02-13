@@ -17,16 +17,16 @@ namespace HRC_Document_Handler.Threads
                 DateTime date = new DateTime();
                 Console.WriteLine("E-Mail Service Active...");
                 Email email = new Email();
-                while (true)
+                while (true) 
                 {
                     date = DateTime.Now;
                     Console.Clear();
                     Console.WriteLine(new ConsoleRender().header());
                     Console.WriteLine("Press 'x' to pause.\n");
                     Console.WriteLine("Progess:\n");
-                    Console.WriteLine("Synchronized - " + date);
+                    Console.WriteLine("E-mail synchronized - " + date);
                     //email.ReadImap();
-                    Thread.Sleep(3000);
+                    Thread.Sleep(300000);
                 }
 
           }

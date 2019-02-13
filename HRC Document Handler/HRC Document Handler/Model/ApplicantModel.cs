@@ -122,6 +122,8 @@ namespace HRC_Document_Handler.Model
             {
                 string command = "DELETE FROM jeloltek WHERE jeloltek.email = '" + email + "';";
                 mySql.execute(command);
+                command = "DELETE FROM projekt_jelolt_kapcs WHERE projekt_jelolt_kapcs.email = '" + email + "';";
+                mySql.execute(command);
             }
             catch (Exception)
             {
