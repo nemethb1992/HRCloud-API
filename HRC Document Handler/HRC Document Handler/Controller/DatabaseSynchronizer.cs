@@ -25,7 +25,7 @@ namespace HRC_Document_Handler.Controller
             List<ModelFullApplicant> webList = ModelWebApplicant.getList("SELECT * FROM jeloltek");
             foreach (ModelFullApplicant applicant in webList)
             {
-                if(Applicant.isExists(applicant.email) == null)
+                if(Applicant.isExists(applicant.email) == 0)
                 {
                     int applicantID = applicant.Insert();
                     if(applicantID != 0)
@@ -38,12 +38,31 @@ namespace HRC_Document_Handler.Controller
                         //TODO: email kiküldése
                         applicant.deleteWeb(applicant.email);
                         List<DocumentModel> docList = DocumentModel.GetDocuments(applicant.email);
-                        string path = appURL + applicantID + "\\";
+                        string path = appURL + applicantID.ToString() + "\\";
                         foreach (var doc in docList)
                         {
                             Applicant.SaveDocument(path, doc.document_name,doc.document);
                             doc.deleteDocumentWeb(applicant.email);
                         }
+                    }
+                }
+                else
+                {
+                    int applicantID = applicant.Update(applicant.email);
+
+                    List<ProjectConnectionModel> connectedProjects = ProjectConnectionModel.getListWeb("SELECT * FROM projekt_jelolt_kapcs WHERE email = '" + applicant.email + "'");
+                    foreach (var projects in connectedProjects)
+                    {
+                        ProjectConnectionModel.insertDb(projects, applicantID);
+                    }
+                    //TODO: email kiküldése
+                    applicant.deleteWeb(applicant.email);
+                    List<DocumentModel> docList = DocumentModel.GetDocuments(applicant.email);
+                    string path = appURL + applicantID.ToString() + "\\";
+                    foreach (var doc in docList)
+                    {
+                        Applicant.SaveDocument(path, doc.document_name, doc.document);
+                        doc.deleteDocumentWeb(applicant.email);
                     }
                 }
             }

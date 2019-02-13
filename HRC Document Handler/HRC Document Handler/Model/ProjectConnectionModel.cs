@@ -41,7 +41,12 @@ namespace HRC_Document_Handler.Model
         public static void insertDb(ProjectConnectionModel data, int applicantID)
         {
             MySql mySql = new MySql();
-            mySql.execute(@"INSERT INTO `pmkcvtest`.`projekt_jelolt_kapcs` (`projekt_id`, `jelolt_id`,`hr_id`, `allapota`, `datum`) VALUES ("+data.projekt_id+","+ applicantID + ",default,default,'"+data.date+"') ");
+            string command = "SELECT count(`projekt_jelolt_kapcs`.`id`) as count FROM `pmkcvtest`.`projekt_jelolt_kapcs` WHERE `projekt_id` = "+data.projekt_id+ " AND `jelolt_id` = " + applicantID+"";
+            string result = mySql.SqlSingleQuery(command, "count");
+            if (result == "0")
+            {
+                mySql.execute(@"INSERT INTO `pmkcvtest`.`projekt_jelolt_kapcs` (`projekt_id`, `jelolt_id`,`hr_id`, `allapota`, `datum`) VALUES (" + data.projekt_id + "," + applicantID + ",default,default,'" + data.date + "') ");
+            }
         }
 
         }

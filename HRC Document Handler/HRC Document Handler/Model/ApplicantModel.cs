@@ -75,6 +75,48 @@ namespace HRC_Document_Handler.Model
             return applicantID;
         }
 
+        public int Update(string email)  //javított
+        {
+            MySql mySql = new MySql();
+
+            int applicantID = 0;
+            try
+            {
+                string command = "UPDATE `pmkcvtest`.`jeloltek` SET "+
+                 "`nev` = '" + nev + "', "+
+                 "`email` = '" + email + "', "+
+                 "`telefon` = '" + telefon + "', "+ 
+                 "`lakhely` = '" + lakhely + @"', "+
+                 "`ertesult` = " + Utils.Utils.correction(id_ertesult.ToString()) + ", " +
+                 "`szuldatum` = " + Utils.Utils.correction(szuldatum.ToString()) + ", " +
+                 "`neme` = " + Utils.Utils.correction(id_neme.ToString()) + ", " +
+                 "`tapasztalat_ev` = " + Utils.Utils.correction(tapasztalat_ev.ToString()) + ", " +
+                 "`munkakor` = " + Utils.Utils.correction(id_munkakor.ToString()) + ", " +
+                 "`munkakor2` = " + Utils.Utils.correction(id_munkakor2.ToString()) + ", " +
+                 "`munkakor3` = " + Utils.Utils.correction(id_munkakor3.ToString()) + ", " +
+                 "`vegz_terulet` = " + Utils.Utils.correction(id_vegz_terulet.ToString()) + ", " +
+                 "`nyelvtudas` = " + Utils.Utils.correction(id_nyelvtudas.ToString()) + ", " +
+                 "`nyelvtudas2` = " + Utils.Utils.correction(id_nyelvtudas2.ToString()) + ", " +
+                 "`reg_date` = '" + Utils.Utils.correction(reg_date.ToString(), "") + "', " +
+                 "`megjegyzes` = '" + Utils.Utils.correction(megjegyzes.ToString(), "") + "', " +
+                 "`hirlevel` = " + Utils.Utils.correction(hirlevel.ToString()) + ", " +
+                 "`statusz` = 1, "+
+                 "`friss` = 1 " +
+                 "WHERE `email` = '" + email + "' ;";
+
+                mySql.execute(command);
+                command = "SELECT jeloltek.id FROM jeloltek WHERE jeloltek.email = '" + email + "'";
+                applicantID = Convert.ToInt16(mySql.uniqueList(command, "jeloltek", 1)[0]);
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            mySql.dbClose();
+            return applicantID;
+        }
+
     }
 
     public class ModelWebApplicant

@@ -44,13 +44,20 @@ namespace HRC_Document_Handler.Controller
         ///<para>Ha nem szerepel az adott cím a táblában, 0-val tér vissza.</para> 
         ///<returns>return string</returns>
         ///</summary>
-        public static string isExists(string email, bool publicDb = false)
+        public static int isExists(string email, bool publicDb = false)
         {
-            string id = null;
+            int id = 0;
             Model.MySql mySql = new Model.MySql(publicDb);
             if (mySql.bind("SELECT count(id) FROM jeloltek WHERE email='" + email + "'"))
             {
-                id = mySql.SqlSingleQuery("SELECT id FROM jeloltek WHERE email='" + email + "'","id");
+                try
+                {
+                    id = Convert.ToInt32(mySql.SqlSingleQuery("SELECT id FROM jeloltek WHERE email='" + email + "'", "id"));
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
             }
             return id;
         }
