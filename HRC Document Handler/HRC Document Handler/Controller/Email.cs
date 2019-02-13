@@ -65,8 +65,17 @@ namespace HRC_Document_Handler.Controller
                 List<MimeMessage> emailList = GetUnreadMails();
                 Console.WriteLine("Email-ek száma: "+emailList.Count.ToString());
                 foreach (MimeMessage email in emailList)
-                { 
-                    //string from = (email.From.ToString().Split('<')[1]).Split('>')[0];
+                {
+                    //string from = "";
+                    //try
+                    //{
+                    //    from = (email.From.ToString().Split('<')[1]).Split('>')[0];
+                    //}
+                    //catch (Exception)
+                    //{
+
+                    //    throw;
+                    //}
 
                     //if (from.Equals("jelentkezes@profession.hu"))
                     //{
@@ -88,7 +97,7 @@ namespace HRC_Document_Handler.Controller
                     //    }
                     //}
 
-                    if (email.From.Equals("jelentkezes@phoenix-mecano.hu"))
+                    if (email.From.Equals("studio@betapress.hu"))
                     {
                         string seged = Regex.Split(email.HtmlBody, "\r\n")[1].Split('-')[0];
 

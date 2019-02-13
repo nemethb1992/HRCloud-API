@@ -25,8 +25,8 @@ namespace HRC_Document_Handler.Threads
                     Console.WriteLine("Press 'x' to pause.\n");
                     Console.WriteLine("Progess:\n");
                     Console.WriteLine("E-mail synchronized - " + date);
-                    //email.ReadImap();
-                    Thread.Sleep(300000);
+                    email.ReadImap();
+                    Thread.Sleep(30000);
                 }
 
           }
