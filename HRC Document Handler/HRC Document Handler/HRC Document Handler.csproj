@@ -163,6 +163,7 @@
     <Compile Include="Model\ApplicantModel.cs" />
     <Compile Include="Model\DocumentModel.cs" />
     <Compile Include="Model\ProjectConnectionModel.cs" />
+    <Compile Include="Model\WebResourceModel.cs" />
     <Compile Include="Utils\ConsoleRender.cs" />
     <Compile Include="Utils\SQLite.cs" />
     <Compile Include="Utils\MySql.cs" />

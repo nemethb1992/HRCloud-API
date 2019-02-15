@@ -12,5 +12,13 @@ namespace HRC_Document_Handler.Utils
         {
             return (value == conditionValue ? "default" : value.ToString());
         }
+
+        public static void deleteWebTable(string table)
+        {
+            Model.MySql mySql = new Model.MySql(true);
+            string command = "DELETE FROM hrportalweb." + table + ";";
+            mySql.execute(command);
+            mySql.dbClose();
+        }
     }
 }

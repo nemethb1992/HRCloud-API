@@ -20,11 +20,7 @@ namespace HRC_Document_Handler.Threads
                 while (true) 
                 {
                     date = DateTime.Now;
-                    Console.Clear();
-                    Console.WriteLine(new ConsoleRender().header());
-                    Console.WriteLine("Press 'x' to pause.\n");
-                    Console.WriteLine("Progess:\n");
-                    Console.WriteLine("E-mail synchronized - " + date);
+                    Console.WriteLine(new ConsoleRender().header()+ "\nPress 'x' to pause.\n\nProgess:\n\nE-mail synchronized - " + date);
                     //email.ReadImap();
                     Thread.Sleep(30000);
                 }

@@ -11,29 +11,35 @@ namespace HRC_Document_Handler.Controller
 {
     class DatabaseSynchronizer
     {
+        private Model.MySql mySql;
+        private Model.MySql mySqlWeb;
         public DatabaseSynchronizer()
         {
-            synchronize();
+            mySql = new Model.MySql();
+            mySqlWeb = new Model.MySql(true);
+            synchronizeApplicants();
+            synchronizeResources();
+            mySql.dbClose();
+            mySqlWeb.dbClose();
+
         }
 
-        private void synchronize()
+        private void synchronizeApplicants()
         {
-            Model.MySql mySql = new Model.MySql();
-            Model.MySql mySqlWeb = new Model.MySql(true);
             string appURL = mySql.ApplicantURL().url;
 
             List<ModelFullApplicant> webList = ModelWebApplicant.getList("SELECT * FROM jeloltek");
             foreach (ModelFullApplicant applicant in webList)
             {
-                if(Applicant.isExists(applicant.email) == 0)
+                if (Applicant.isExists(applicant.email) == 0)
                 {
                     int applicantID = applicant.Insert();
-                    if(applicantID != 0)
+                    if (applicantID != 0)
                     {
-                        List<ProjectConnectionModel> connectedProjects = ProjectConnectionModel.getListWeb("SELECT * FROM projekt_jelolt_kapcs WHERE email = '"+applicant.email+"'");
+                        List<ProjectConnectionModel> connectedProjects = ProjectConnectionModel.getListWeb("SELECT * FROM projekt_jelolt_kapcs WHERE email = '" + applicant.email + "'");
                         foreach (var projects in connectedProjects)
                         {
-                            ProjectConnectionModel.insertDb(projects,applicantID);
+                            ProjectConnectionModel.insertDb(projects, applicantID);
                         }
                         //TODO: email kiküldése
                         applicant.deleteWeb(applicant.email);
@@ -41,7 +47,7 @@ namespace HRC_Document_Handler.Controller
                         string path = appURL + applicantID.ToString() + "\\";
                         foreach (var doc in docList)
                         {
-                            Applicant.SaveDocument(path, doc.document_name,doc.document);
+                            Applicant.SaveDocument(path, doc.document_name, doc.document);
                             doc.deleteDocumentWeb(applicant.email);
                         }
                     }
@@ -66,8 +72,37 @@ namespace HRC_Document_Handler.Controller
                     }
                 }
             }
-            mySql.dbClose();
-            mySqlWeb.dbClose();
+        }
+
+        private void synchronizeResources()
+        {
+            List<ModelProjektek> projektList = ModelProjektek.getProjektek("SELECT id, megnevezes_projekt, statusz, fel_datum FROM projektek WHERE statusz=1");
+            Utils.Utils.deleteWebTable("projektek");
+            foreach (var item in projektList)
+            {
+                item.insertWeb(mySqlWeb);
+            }
+
+            List<ModelErtesulesek> ertesulesekList = ModelErtesulesek.getErtesulesek("SELECT id, ertesules_megnevezes FROM ertesulesek");
+            Utils.Utils.deleteWebTable("ertesulesek");
+            foreach (var item in ertesulesekList)
+            {
+                item.insertWeb(mySqlWeb);
+            }
+
+            List<ModelNyelv> nyelvList = ModelNyelv.getNyelv("SELECT id, megnevezes_nyelv FROM nyelv");
+            Utils.Utils.deleteWebTable("nyelv");
+            foreach (var item in nyelvList)
+            {
+                item.insertWeb(mySqlWeb);
+            }
+
+            List<ModelVegzettseg> vegzettsegList = ModelVegzettseg.getVegzettsegek("SELECT id, megnevezes_vegzettseg FROM vegzettsegek");
+            Utils.Utils.deleteWebTable("vegzettsegek");
+            foreach (var item in vegzettsegList)
+            {
+                item.insertWeb(mySqlWeb);
+            }
         }
     }
 }
