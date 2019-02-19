@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,5 +21,19 @@ namespace HRC_Document_Handler.Utils
             mySql.execute(command);
             mySql.dbClose();
         }
+
+        public static bool hasWriteAccessToFolder(string folderPath)
+        {
+            try
+            {
+                return Directory.Exists(folderPath);
+
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return false;
+            }
+        }
+
     }
 }

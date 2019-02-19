@@ -21,7 +21,7 @@ namespace HRC_Document_Handler.Threads
                 date = DateTime.Now;
                 Console.WriteLine(new ConsoleRender().header()+ "\nPress 'x' to pause.\n\nProgess:\n\nDatabase synchronized - " + date);
                 new DatabaseSynchronizer();
-                Thread.Sleep(30000);
+                Thread.Sleep(120000);
             }
 
         }

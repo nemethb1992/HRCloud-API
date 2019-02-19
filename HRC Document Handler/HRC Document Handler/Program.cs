@@ -35,12 +35,12 @@ namespace HRC_Document_Handler
 
                         do
                         {
-                            mailThread.Start();
+                            //mailThread.Start();
                             dbThread.Start();
                         suspend = Console.ReadLine();
                         if (suspend == "x")
                         {
-                            mailThread.Suspend();
+                            //mailThread.Suspend();
                                 dbThread.Suspend();
                                 Console.WriteLine("Suspended");
                             Console.WriteLine("Press 'y' to start again.");
@@ -49,7 +49,7 @@ namespace HRC_Document_Handler
                                     Console.Clear();
                                     Console.WriteLine(cr.header());
                                     Console.WriteLine("Started");
-                                    mailThread.Resume();
+                                    //mailThread.Resume();
                                     dbThread.Resume();
                                 }
                         }

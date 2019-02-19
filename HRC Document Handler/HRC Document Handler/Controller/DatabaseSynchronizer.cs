@@ -11,22 +11,38 @@ namespace HRC_Document_Handler.Controller
 {
     class DatabaseSynchronizer
     {
+        private string appURL;
         private Model.MySql mySql;
         private Model.MySql mySqlWeb;
         public DatabaseSynchronizer()
         {
-            mySql = new Model.MySql();
-            mySqlWeb = new Model.MySql(true);
-            synchronizeApplicants();
-            synchronizeResources();
-            mySql.dbClose();
-            mySqlWeb.dbClose();
+            try
+            {
+                mySql = new Model.MySql();
+                mySqlWeb = new Model.MySql(true);
+                appURL = mySql.ApplicantURL().url;
+                if (Utils.Utils.hasWriteAccessToFolder(appURL))
+                {
+                    synchronizeApplicants();
+                }
+                else
+                {
+                    Console.WriteLine("- Applicants mappa elérése sikertelen!");
+                }
+
+                synchronizeResources();
+                mySql.dbClose();
+                mySqlWeb.dbClose();
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Szál futása sikertelen!");
+            }
 
         }
 
         private void synchronizeApplicants()
         {
-            string appURL = mySql.ApplicantURL().url;
 
             List<ModelFullApplicant> webList = ModelWebApplicant.getList("SELECT * FROM jeloltek");
             foreach (ModelFullApplicant applicant in webList)

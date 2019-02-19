@@ -22,7 +22,7 @@ namespace HRC_Document_Handler.Threads
                     date = DateTime.Now;
                     Console.WriteLine(new ConsoleRender().header()+ "\nPress 'x' to pause.\n\nProgess:\n\nE-mail synchronized - " + date);
                     //email.ReadImap();
-                    Thread.Sleep(30000);
+                    Thread.Sleep(300000);
                 }
 
           }
