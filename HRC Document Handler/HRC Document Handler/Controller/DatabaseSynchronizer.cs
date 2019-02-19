@@ -56,6 +56,7 @@ namespace HRC_Document_Handler.Controller
                         foreach (var projects in connectedProjects)
                         {
                             ProjectConnectionModel.insertDb(projects, applicantID);
+                            Statistics.JelentkezesLog(applicantID, projects.projekt_id);
                         }
                         //TODO: email kiküldése
                         applicant.deleteWeb(applicant.email);
