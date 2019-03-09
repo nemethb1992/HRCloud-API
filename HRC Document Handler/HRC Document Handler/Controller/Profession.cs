@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HRC_Document_Handler.Model;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -34,22 +35,23 @@ namespace HRC_Document_Handler.Controller
             Console.WriteLine(project);
         }
 
-        public string Insert()  //javított
+        public string Insert()  //TODO átírni hogy a jelöltek táblába illessze a jelölt model eljárása alapján
         {
             string id = null;
             Model.MySql mySql = new Model.MySql();
-            if (!mySql.bind("SELECT count(id) FROM jeloltek WHERE email='" + email + "'") && !mySql.bind("SELECT count(id) FROM profession_jeloltek WHERE email='" + email + "'"))
+            if (!mySql.bind("SELECT count(id) FROM jeloltek WHERE email='" + email + "'"))
             {
                 DateTime localDate = DateTime.Now;
-                string command = "INSERT INTO profession_jeloltek (`id`, `nev`, `email`, `telefon`, `projekt`, `reg_date`) " +
-                "VALUES(NULL, '" + name + "',  '" + email + "', '" + telephone + "', '"+project+"', '"+ localDate.ToString("yyyy.MM.dd") + "');";
-                mySql.execute(command);
-                id = mySql.SqlSingleQuery("SELECT id FROM profession_jeloltek WHERE email='" + email + "'", "id");
+                ModelFullApplicant applicant = new ModelFullApplicant { nev = this.name, email = this.email, telefon = this.telephone, project = this.project, reg_date = localDate.ToString("yyyy.MM.dd") };
+                applicant.Insert();
+                ProjectConnection projectConn = new ProjectConnection(project) { project_name = this.project, email = this.email, date = localDate.ToString("yyyy.MM.dd") };
+                id = mySql.SqlSingleQuery("SELECT id FROM jeloltek WHERE email='" + email + "'", "id");
+                projectConn.Insert(Convert.ToInt32(id));
                 mySql.dbClose();
             }
             else
             {
-                id = mySql.SqlSingleQuery("SELECT id FROM profession_jeloltek WHERE email = '" + email + "'", "id");
+                id = mySql.SqlSingleQuery("SELECT id FROM jeloltek WHERE email = '" + email + "'", "id");
                 mySql.dbClose();
             }
             return id;

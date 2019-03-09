@@ -37,6 +37,7 @@ namespace HRC_Document_Handler.Model
         public string folderUrl { get; set; }
         public int statusz { get; set; }
         public int hirlevel { get; set; }
+        public string project { get; set; }
 
         public int Insert()  //javított
         {

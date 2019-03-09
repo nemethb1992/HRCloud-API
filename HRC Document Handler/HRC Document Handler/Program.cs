@@ -35,21 +35,21 @@ namespace HRC_Document_Handler
 
                         do
                         {
-                            //mailThread.Start();
-                            dbThread.Start();
+                            mailThread.Start();
+                            //dbThread.Start();
                         suspend = Console.ReadLine();
                         if (suspend == "x")
                         {
-                            //mailThread.Suspend();
-                                dbThread.Suspend();
-                                Console.WriteLine("Suspended");
+                            mailThread.Suspend();
+                            dbThread.Suspend();
+                            Console.WriteLine("Suspended");
                             Console.WriteLine("Press 'y' to start again.");
                             if (Console.ReadLine() == "y")
                                 {
                                     Console.Clear();
                                     Console.WriteLine(cr.header());
                                     Console.WriteLine("Started");
-                                    //mailThread.Resume();
+                                    mailThread.Resume();
                                     dbThread.Resume();
                                 }
                         }
