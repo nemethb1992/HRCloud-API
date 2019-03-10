@@ -46,7 +46,7 @@ namespace HRC_Document_Handler.Model
             int applicantID = 0;
             try
             {
-                string command = "INSERT INTO jeloltek (`id`, `nev`, `email`, `telefon`, `lakhely`, `ertesult`, `szuldatum`, `neme`, `tapasztalat_ev`, `munkakor`, `munkakor2`, `munkakor3`, `vegz_terulet`, `nyelvtudas`,`nyelvtudas2`, `reg_date`, `hirlevel`) " +
+                string command = "INSERT INTO jeloltek (`id`, `nev`, `email`, `telefon`, `lakhely`, `ertesult`, `szuldatum`, `neme`, `tapasztalat_ev`, `munkakor`, `munkakor2`, `munkakor3`, `vegz_terulet`, `nyelvtudas`,`nyelvtudas2`, `reg_date`, `hirlevel`, `megjegyzes`) " +
                 "VALUES(NULL, '" +
                 nev + "',  '" +
                 email + "', '" +
@@ -63,7 +63,8 @@ namespace HRC_Document_Handler.Model
                 Utils.Utils.correction(id_nyelvtudas.ToString()) + "," +
                 Utils.Utils.correction(id_nyelvtudas2.ToString()) + ",'" +
                 Utils.Utils.correction(reg_date.ToString(), "") + "'," +
-                Utils.Utils.correction(hirlevel.ToString()) + ");";
+                Utils.Utils.correction(hirlevel.ToString()) + ",'" +
+                Utils.Utils.correction(megjegyzes.ToString(), "") + "');";
                 mySql.execute(command);
                 command = "SELECT jeloltek.id FROM jeloltek WHERE jeloltek.email = '" + email + "' AND jeloltek.nev = '" + nev + "'";
                 applicantID = Convert.ToInt16(mySql.uniqueList(command, "jeloltek", 1)[0]);

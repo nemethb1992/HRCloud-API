@@ -15,34 +15,40 @@ namespace HRC_Document_Handler.Controller
         string email;
         string telephone;
         string project;
+        string megjegyzes;
 
-        public Profession(string rawEmail)
+        public Profession(string rawContent)
         {
-            if (!rawEmail.Equals(null))
+            if (!rawContent.Equals(null))
             {
-                name = Regex.Split(Regex.Split(rawEmail, "Név: <b>")[1], "</b>")[0]; 
-                email = Regex.Split(Regex.Split(rawEmail, "<a href=\"mailto:")[1], "\" style")[0];
-                telephone = Regex.Split(Regex.Split(rawEmail, "Telefonszám: ")[1], "<br")[0];
-                project = Regex.Split(Regex.Split(rawEmail, "Pozíció/cég: <b>")[1], "</b>")[0];
+                try
+                {
+                    name = Regex.Split(Regex.Split(rawContent, "Név: <b>")[1], "</b>")[0]; 
+                    email = Regex.Split(Regex.Split(rawContent, "<a href=\"mailto:")[1], "\" style")[0];
+                    telephone = Regex.Split(Regex.Split(rawContent, "Telefonszám: ")[1], "<br")[0];
+                    project = Regex.Split(Regex.Split(rawContent, "Pozíció/cég: <b>")[1], "</b>")[0];
+                    megjegyzes = "(Profession) Megjelölt pozíció neve: " + Regex.Split(Regex.Split(rawContent, "Pozíció/cég: <b>")[1], "</b>")[0];
+                }
+                catch (Exception)
+                {
+                    name = Regex.Split(Regex.Split(rawContent, "Név: </span><b>")[1], "</b><br>")[0];
+                    email = Regex.Split(Regex.Split(rawContent, "E-mail: </span><b>")[1], "</b><br>")[0];
+                    telephone = Regex.Split(Regex.Split(rawContent, "Telefonszám:</span> <b>")[1], "</b><br>")[0];
+                    project = Regex.Split(Regex.Split(rawContent, "<b style=\"color: #b4006e\">")[1], "</b>")[0];
+                    megjegyzes = "(Profession) Megjelölt pozíció neve: " + Regex.Split(Regex.Split(rawContent, "<b style=\"color: #b4006e\">")[1], "</b>")[0];
+                }
             }
         }
+        
 
-        protected void Out()
-        {
-            Console.WriteLine(name);
-            Console.WriteLine(email);
-            Console.WriteLine(telephone);
-            Console.WriteLine(project);
-        }
-
-        public string Insert()  //TODO átírni hogy a jelöltek táblába illessze a jelölt model eljárása alapján
+        public string Insert() 
         {
             string id = null;
             Model.MySql mySql = new Model.MySql();
             if (!mySql.bind("SELECT count(id) FROM jeloltek WHERE email='" + email + "'"))
             {
                 DateTime localDate = DateTime.Now;
-                ModelFullApplicant applicant = new ModelFullApplicant { nev = this.name, email = this.email, telefon = this.telephone, project = this.project, reg_date = localDate.ToString("yyyy.MM.dd") };
+                ModelFullApplicant applicant = new ModelFullApplicant { nev = this.name, email = this.email, telefon = this.telephone, project = this.project, reg_date = localDate.ToString("yyyy.MM.dd"), megjegyzes = this.megjegyzes };
                 applicant.Insert();
                 ProjectConnection projectConn = new ProjectConnection(project) { project_name = this.project, email = this.email, date = localDate.ToString("yyyy.MM.dd") };
                 id = mySql.SqlSingleQuery("SELECT id FROM jeloltek WHERE email='" + email + "'", "id");

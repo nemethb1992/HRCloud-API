@@ -25,8 +25,8 @@ namespace HRC_Document_Handler
             Thread mailThread = new System.Threading.Thread(new ThreadStart(ImapThread.getMail));
             Thread dbThread = new System.Threading.Thread(new ThreadStart(DbSynchroThread.synchronize));
             do {
-                if (count > 0)
-                {
+                //if (count > 0)
+                //{
             
                         string suspend = "";
                     //Thread tid2 = new Thread(new ThreadStart(MyThread.Thread2));
@@ -35,8 +35,8 @@ namespace HRC_Document_Handler
 
                         do
                         {
-                            mailThread.Start();
-                            //dbThread.Start();
+                            //mailThread.Start();
+                            dbThread.Start();
                         suspend = Console.ReadLine();
                         if (suspend == "x")
                         {
@@ -61,11 +61,11 @@ namespace HRC_Document_Handler
                     }
 
 
-                }
-                else
-                {
-                    mailThread.Start();
-                }
+                //}
+                //else
+                //{
+                //    mailThread.Start();
+                //}
             } while (true);
 
         }
