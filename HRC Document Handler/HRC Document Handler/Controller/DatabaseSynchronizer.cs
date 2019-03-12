@@ -43,7 +43,6 @@ namespace HRC_Document_Handler.Controller
 
         private void synchronizeApplicants()
         {
-
             List<ModelFullApplicant> webList = ModelWebApplicant.getList("SELECT * FROM jeloltek");
             foreach (ModelFullApplicant applicant in webList)
             {

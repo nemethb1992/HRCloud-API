@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Deployment;
 using HRC_Document_Handler.Threads;
 using HRC_Document_Handler.Utils;
+using HRC_Document_Handler.Sandbox;
 
 namespace HRC_Document_Handler
 {
@@ -17,12 +18,14 @@ namespace HRC_Document_Handler
     {
         public static void Main()
         {
+            //TestClass test = new TestClass();
+
             ConsoleRender cr = new ConsoleRender();
             Console.WriteLine(cr.header());
             Model.MySql mySql = new Model.MySql();
             int count = Convert.ToInt32(mySql.SqlSingleQuery("SELECT count(mailserver) as count FROM ConnectionSMTP", "count"));
             mySql.dbClose();
-            Thread mailThread = new System.Threading.Thread(new ThreadStart(ImapThread.getMail));
+            //Thread mailThread  = new System.Threading.Thread(new ThreadStart(ImapThread.getMail));
             Thread dbThread = new System.Threading.Thread(new ThreadStart(DbSynchroThread.synchronize));
             do {
                 //if (count > 0)
@@ -40,7 +43,7 @@ namespace HRC_Document_Handler
                         suspend = Console.ReadLine();
                         if (suspend == "x")
                         {
-                            mailThread.Suspend();
+                            //mailThread.Suspend();
                             dbThread.Suspend();
                             Console.WriteLine("Suspended");
                             Console.WriteLine("Press 'y' to start again.");
@@ -49,7 +52,7 @@ namespace HRC_Document_Handler
                                     Console.Clear();
                                     Console.WriteLine(cr.header());
                                     Console.WriteLine("Started");
-                                    mailThread.Resume();
+                                    //mailThread.Resume();
                                     dbThread.Resume();
                                 }
                         }

@@ -166,6 +166,7 @@
     <Compile Include="Model\ProjectConnectionModel.cs" />
     <Compile Include="Controller\Statistics.cs" />
     <Compile Include="Model\WebResourceModel.cs" />
+    <Compile Include="Sandbox\TestClass.cs" />
     <Compile Include="Utils\ConsoleRender.cs" />
     <Compile Include="Utils\SQLite.cs" />
     <Compile Include="Utils\MySql.cs" />
@@ -200,6 +201,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.108.0\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.108.0\build\net45\System.Data.SQLite.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
