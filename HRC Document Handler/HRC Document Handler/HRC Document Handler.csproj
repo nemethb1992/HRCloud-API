@@ -32,7 +32,7 @@
     <SuiteName>Phoenix Mecano Kecskemét Kft.</SuiteName>
     <WebPage>publish.htm</WebPage>
     <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>4</ApplicationRevision>
+    <ApplicationRevision>5</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -156,18 +156,21 @@
   <ItemGroup>
     <Compile Include="Controller\Applicant.cs" />
     <Compile Include="Controller\DatabaseSynchronizer.cs" />
-    <Compile Include="Controller\Email.cs" />
+    <Compile Include="Controller\EmailImap.cs" />
     <Compile Include="Controller\Folder.cs" />
     <Compile Include="Controller\Outdated_cont.cs" />
     <Compile Include="Controller\Profession.cs" />
     <Compile Include="Model\ApplicantModel.cs" />
     <Compile Include="Model\DocumentModel.cs" />
+    <Compile Include="Model\MailData.cs" />
     <Compile Include="Model\ProjectConnection.cs" />
     <Compile Include="Model\ProjectConnectionModel.cs" />
-    <Compile Include="Controller\Statistics.cs" />
     <Compile Include="Model\WebResourceModel.cs" />
+    <Compile Include="Public\EmailTemplates.cs" />
     <Compile Include="Sandbox\TestClass.cs" />
+    <Compile Include="Threads\MailSenderThread.cs" />
     <Compile Include="Utils\ConsoleRender.cs" />
+    <Compile Include="Controller\EmailSender.cs" />
     <Compile Include="Utils\SQLite.cs" />
     <Compile Include="Utils\MySql.cs" />
     <Compile Include="Model\MailServer_m.cs" />

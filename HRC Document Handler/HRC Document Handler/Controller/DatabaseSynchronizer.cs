@@ -16,8 +16,8 @@ namespace HRC_Document_Handler.Controller
         private Model.MySql mySqlWeb;
         public DatabaseSynchronizer()
         {
-            try
-            {
+            //try
+            //{
                 mySql = new Model.MySql();
                 mySqlWeb = new Model.MySql(true);
                 appURL = mySql.ApplicantURL().url;
@@ -33,11 +33,11 @@ namespace HRC_Document_Handler.Controller
                 synchronizeResources();
                 mySql.dbClose();
                 mySqlWeb.dbClose();
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Szál futása sikertelen!");
-            }
+            //}
+            //catch (Exception)
+            //{
+            //    Console.WriteLine("Szál futása sikertelen!");
+            //}
 
         }
 
@@ -55,7 +55,6 @@ namespace HRC_Document_Handler.Controller
                         foreach (var projects in connectedProjects)
                         {
                             ProjectConnectionModel.insertDb(projects, applicantID);
-                            Statistics.JelentkezesLog(applicantID, projects.projekt_id);
                         }
                         //TODO: email kiküldése
                         applicant.deleteWeb(applicant.email);

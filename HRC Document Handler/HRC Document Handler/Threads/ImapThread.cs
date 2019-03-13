@@ -16,7 +16,7 @@ namespace HRC_Document_Handler.Threads
 
                 DateTime date = new DateTime();
                 Console.WriteLine("E-Mail Service Active...");
-                Email email = new Email();
+                EmailImap email = new EmailImap();
                 while (true) 
                 {
                     date = DateTime.Now;

@@ -18,59 +18,43 @@ namespace HRC_Document_Handler
     {
         public static void Main()
         {
-            //TestClass test = new TestClass();
-
             ConsoleRender cr = new ConsoleRender();
             Console.WriteLine(cr.header());
-            Model.MySql mySql = new Model.MySql();
-            int count = Convert.ToInt32(mySql.SqlSingleQuery("SELECT count(mailserver) as count FROM ConnectionSMTP", "count"));
-            mySql.dbClose();
-            //Thread mailThread  = new System.Threading.Thread(new ThreadStart(ImapThread.getMail));
-            Thread dbThread = new System.Threading.Thread(new ThreadStart(DbSynchroThread.synchronize));
-            do {
-                //if (count > 0)
-                //{
-            
-                        string suspend = "";
-                    //Thread tid2 = new Thread(new ThreadStart(MyThread.Thread2));
-                    try
+            Thread dbThread = new Thread(new ThreadStart(DbSynchroThread.listener));
+            Thread mailThread = new Thread(new ThreadStart(MailSenderThread.listener));
+            do
+            {
+                string suspend = "";
+                try
+                {
+                    do
                     {
-
-                        do
-                        {
-                            //mailThread.Start();
-                            dbThread.Start();
+                        mailThread.Start();
+                        dbThread.Start();
+                        Console.WriteLine("Press 'x' to pause.\n\nLast activity: - " + DateTime.Now);
                         suspend = Console.ReadLine();
                         if (suspend == "x")
                         {
-                            //mailThread.Suspend();
+                            mailThread.Suspend();
                             dbThread.Suspend();
                             Console.WriteLine("Suspended");
                             Console.WriteLine("Press 'y' to start again.");
                             if (Console.ReadLine() == "y")
-                                {
-                                    Console.Clear();
-                                    Console.WriteLine(cr.header());
-                                    Console.WriteLine("Started");
-                                    //mailThread.Resume();
-                                    dbThread.Resume();
-                                }
+                            {
+                                Console.Clear();
+                                Console.WriteLine(cr.header());
+                                Console.WriteLine("Started");
+                                mailThread.Resume();
+                                dbThread.Resume();
+                            }
                         }
 
-                        } while (suspend != "y" && suspend != "n");
-                    }
-                    catch (Exception)
-                    {
-                    }
-
-
-                //}
-                //else
-                //{
-                //    mailThread.Start();
-                //}
-            } while (true);
-
+                    } while (suspend != "y" && suspend != "n");
+                }
+                catch (Exception)
+                {
+                }
+             } while (true);
         }
 
     }

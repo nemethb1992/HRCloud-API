@@ -16,13 +16,13 @@ using System.Threading.Tasks;
 
 namespace HRC_Document_Handler.Controller
 {
-    class Email
+    class EmailImap
     {
         private static SMTPmodel SMTPdatas;
         public SMTPmodel SMTPdata { get { return SMTPdatas; } set { SMTPdatas = value; } }
         Model.MySql mySql = new Model.MySql();
 
-        public Email()
+        public EmailImap()
         {
             SMTPdata = mySql.SMTPdataIMAP();
             mySql.dbClose();

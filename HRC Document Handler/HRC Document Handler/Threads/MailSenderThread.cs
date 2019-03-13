@@ -1,5 +1,4 @@
-﻿using HRC_Document_Handler.Controller;
-using HRC_Document_Handler.Utils;
+﻿using HRC_Document_Handler.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,15 +8,15 @@ using System.Threading.Tasks;
 
 namespace HRC_Document_Handler.Threads
 {
-    class DbSynchroThread
+    class MailSenderThread
     {
         public static void listener()
         {
-            Console.WriteLine(" - Database synchronisation is running... \n");
+            Console.WriteLine(" - Mail handler is running...\n");
             while (true)
             {
-                new DatabaseSynchronizer();
-                Thread.Sleep(120000); 
+                new EmailSender();
+                Thread.Sleep(60000);
             }
         }
     }
