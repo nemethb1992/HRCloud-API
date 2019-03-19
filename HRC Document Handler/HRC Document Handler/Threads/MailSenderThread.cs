@@ -12,10 +12,11 @@ namespace HRC_Document_Handler.Threads
     {
         public static void listener()
         {
-            Console.WriteLine(" - Mail handler is running...\n");
+            Console.WriteLine("\n - Mail handler is running...");
             while (true)
             {
                 new EmailSender();
+                //Console.WriteLine("\n (Mail) Last activity: - " + DateTime.Now);
                 Thread.Sleep(60000);
             }
         }

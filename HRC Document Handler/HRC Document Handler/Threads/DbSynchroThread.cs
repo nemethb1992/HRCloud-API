@@ -13,10 +13,11 @@ namespace HRC_Document_Handler.Threads
     {
         public static void listener()
         {
-            Console.WriteLine(" - Database synchronisation is running... \n");
+            Console.WriteLine("\n - Database synchronisation is running...");
             while (true)
             {
                 new DatabaseSynchronizer();
+                //Console.WriteLine("\n (Web Db) Last activity: - " + DateTime.Now);
                 Thread.Sleep(120000); 
             }
         }

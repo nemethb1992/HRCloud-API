@@ -31,7 +31,7 @@ namespace HRC_Document_Handler
                     {
                         mailThread.Start();
                         dbThread.Start();
-                        Console.WriteLine("Press 'x' to pause.\n\nLast activity: - " + DateTime.Now);
+                        Console.WriteLine("Press 'x' to pause.");
                         suspend = Console.ReadLine();
                         if (suspend == "x")
                         {
