@@ -8,7 +8,7 @@ namespace HRC_Document_Handler.Controller
     {
 
         DateTime dateTime = DateTime.Now;
-        Model.MySql dbEMy = new Model.MySql();
+        MySql dbEMy = new MySql();
         public List<ModelFullApplicant> JeloltFullDataSource()
         {
 

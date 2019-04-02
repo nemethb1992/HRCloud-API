@@ -32,7 +32,7 @@
     <SuiteName>Phoenix Mecano Kecskemét Kft.</SuiteName>
     <WebPage>publish.htm</WebPage>
     <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationRevision>3</ApplicationRevision>
     <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -171,6 +171,7 @@
     <Compile Include="Model\ProjectConnection.cs" />
     <Compile Include="Model\ProjectConnectionModel.cs" />
     <Compile Include="Model\StatisticModel\JelentkezoEloszlasModel.cs" />
+    <Compile Include="Model\StatisticModel\ModelJelentkezesek.cs" />
     <Compile Include="Model\StatisticStampModel.cs" />
     <Compile Include="Model\WebResourceModel.cs" />
     <Compile Include="Public\EmailTemplates.cs" />
@@ -179,6 +180,7 @@
     <Compile Include="Threads\MailSenderThread.cs" />
     <Compile Include="Utils\ConsoleRender.cs" />
     <Compile Include="Controller\EmailSender.cs" />
+    <Compile Include="Utils\Error.cs" />
     <Compile Include="Utils\SQLite.cs" />
     <Compile Include="Utils\MySql.cs" />
     <Compile Include="Model\MailServer_m.cs" />

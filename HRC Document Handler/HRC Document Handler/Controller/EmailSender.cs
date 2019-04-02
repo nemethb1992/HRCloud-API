@@ -26,7 +26,7 @@ namespace HRC_Document_Handler.Utils
 
         protected void testMailLoadup(string to, int db)
         {
-            Model.MySql mySql = new Model.MySql();
+            MySql mySql = new MySql();
             for (int i = 0; i < db; i++)
             {
                 string sql = "INSERT INTO `email_storage` (`to`, `subject`, `content`, `hr_id`, `state`, `date`) VALUES ('"+ to + "', 'HR Portal -Phoenix Mecano Kecskemét kft.', 'Teszt', 1, 0, '2019.03.13');";

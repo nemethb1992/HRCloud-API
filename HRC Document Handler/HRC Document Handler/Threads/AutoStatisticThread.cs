@@ -1,4 +1,5 @@
 ﻿using HRC_Document_Handler.Controller;
+using HRC_Document_Handler.Utils;
 using System;
 using System.Threading;
 
@@ -15,9 +16,9 @@ namespace HRC_Document_Handler.Threads
                 {
                     new AutomatizedStatistics();
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    //Hibalog
+                    Error.Log(e.ToString(), "AutomatizedStatistics");
                 }
                 Thread.Sleep(1800000);
             }

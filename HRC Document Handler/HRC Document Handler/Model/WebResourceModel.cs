@@ -77,41 +77,7 @@ namespace HRC_Document_Handler.Model
         }
     }
 
-    public class ModelRegisztraltak
-    {
-        public string email { get; set; }
-        public int projekt_id { get; set; }
-        public string reg_date { get; set; }
-
-        public static List<ModelRegisztraltak> getRegisztraltak(string query)
-        {
-            MySql mySql = new MySql(true);
-            List<ModelRegisztraltak> items = new List<ModelRegisztraltak>();
-            if (mySql.dbOpen() == true)
-            {
-                mySql.cmd = new MySqlCommand(query, mySql.conn);
-                mySql.sdr = mySql.cmd.ExecuteReader();
-                while (mySql.sdr.Read())
-                {
-                    items.Add(new ModelRegisztraltak
-                    {
-                        email = mySql.sdr["email"].ToString(),
-                        projekt_id = Convert.ToInt32(mySql.sdr["projekt_id"]),
-                        reg_date = mySql.sdr["reg_date"].ToString()
-
-                    });
-                }
-                mySql.sdr.Close();
-            }
-            return items;
-        }
-
-        public void Insert(MySql mysql)
-        {
-            string command = "INSERT INTO `regisztraltak`(`email`, `projekt_id`, `reg_date`) VALUES ('" + email + "'," + projekt_id + ",'" + reg_date + "')";
-            mysql.execute(command);
-        }
-    }
+    
 
     public class ModelErtesulesek
     {

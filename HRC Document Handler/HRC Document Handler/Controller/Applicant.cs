@@ -47,7 +47,7 @@ namespace HRC_Document_Handler.Controller
         public static int isExists(string email, bool publicDb = false)
         {
             int id = 0;
-            Model.MySql mySql = new Model.MySql(publicDb);
+            MySql mySql = new MySql(publicDb);
             if (mySql.bind("SELECT count(id) FROM jeloltek WHERE email='" + email + "'"))
             {
                 try

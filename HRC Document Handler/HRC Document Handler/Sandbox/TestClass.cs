@@ -27,7 +27,7 @@ namespace HRC_Document_Handler.Sandbox
         public List<Seged> getList(string command)
         {
             List<Seged> list = new List<Seged>();
-            Model.MySql mySqlWeb = new Model.MySql();
+            MySql mySqlWeb = new MySql();
             if (mySqlWeb.dbOpen() == true)
             {
                 mySqlWeb.cmd = new MySqlCommand(command, mySqlWeb.conn);
@@ -50,7 +50,7 @@ namespace HRC_Document_Handler.Sandbox
 
         public void Insert(List<Seged> list)
         {
-            Model.MySql mySqlWeb = new Model.MySql(true);
+            MySql mySqlWeb = new MySql(true);
             foreach (var item in list)
             {
                 string command = "UPDATE `regisztraltak` SET `projekt_id`="+item.projekt_id+",`reg_date`='"+item.datum+"' WHERE email = '"+item.email+"'";

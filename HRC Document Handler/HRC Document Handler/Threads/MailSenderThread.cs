@@ -19,9 +19,9 @@ namespace HRC_Document_Handler.Threads
                 {
                     new EmailSender();
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    //Hibalog
+                    Error.Log(e.ToString(), "EmailSender");
                 }
                 Thread.Sleep(60000);
             }

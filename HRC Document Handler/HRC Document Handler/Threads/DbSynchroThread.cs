@@ -20,9 +20,9 @@ namespace HRC_Document_Handler.Threads
                 {
                     new DatabaseSynchronizer();
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    //Hibalog
+                    Error.Log(e.ToString(), "DatabaseSynchronizer");
                 }
                 Thread.Sleep(120000); 
             }

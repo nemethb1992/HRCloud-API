@@ -1,4 +1,5 @@
 ﻿using HRC_Document_Handler.Model;
+using HRC_Document_Handler.Model.StatisticModel;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,14 +13,14 @@ namespace HRC_Document_Handler.Controller
     class DatabaseSynchronizer
     {
         private string appURL;
-        private Model.MySql mySql;
-        private Model.MySql mySqlWeb;
+        private MySql mySql;
+        private MySql mySqlWeb;
         public DatabaseSynchronizer()
         {
             //try
             //{
-                mySql = new Model.MySql();
-                mySqlWeb = new Model.MySql(true);
+                mySql = new MySql();
+                mySqlWeb = new MySql(true);
                 appURL = mySql.ApplicantURL().url;
                 if (Utility.hasWriteAccessToFolder(appURL))
                 {
@@ -119,9 +120,9 @@ namespace HRC_Document_Handler.Controller
                 item.insertWeb(mySqlWeb);
             }
 
-            List<ModelRegisztraltak> regisztraltakList = ModelRegisztraltak.getRegisztraltak("SELECT email, projekt_id, reg_date FROM regisztraltak");
-            Utility.deleteTable("regisztraltak");
-            foreach (var item in regisztraltakList)
+            List<ModelJelentkezesek> jelentkezesekList = ModelJelentkezesek.getJelentkezesekWeb("SELECT * FROM jelentkezesek");
+            Utility.deleteTable("jelentkezesek");
+            foreach (var item in jelentkezesekList)
             {
                 item.Insert(mySql);
             }

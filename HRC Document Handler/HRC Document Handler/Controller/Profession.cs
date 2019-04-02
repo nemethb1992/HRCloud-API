@@ -44,7 +44,7 @@ namespace HRC_Document_Handler.Controller
         public string Insert() 
         {
             string id = null;
-            Model.MySql mySql = new Model.MySql();
+            MySql mySql = new MySql();
             if (!mySql.bind("SELECT count(id) FROM jeloltek WHERE email='" + email + "'"))
             {
                 DateTime localDate = DateTime.Now;

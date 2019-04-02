@@ -16,16 +16,16 @@ namespace HRC_Document_Handler.Controller
         private Application excel;
 
         private string statUrl;
-        private Model.MySql mySql;
+        private MySql mySql;
         public AutomatizedStatistics()
         {
-            mySql = new Model.MySql();
+            mySql = new MySql();
             statUrl = mySql.StatisticURL().url;
             if (Utility.hasWriteAccessToFolder(statUrl))
             {
-                if(DateTime.Now.DayOfWeek == DayOfWeek.Sunday && DateTime.Now.Hour >= 22)
-                {
-                    JelentkezokEloszlasaGenerate();
+                 if (DateTime.Now.DayOfWeek == DayOfWeek.Sunday && DateTime.Now.Hour >= 22)
+                 {
+                 JelentkezokEloszlasaGenerate();
                 }
             }
             
@@ -51,24 +51,51 @@ namespace HRC_Document_Handler.Controller
             string toStr = to.Year + "." + Utility.DateCorrect(to.Month) + "." + Utility.DateCorrect(to.Day) + ".";
             string fromStr = from.Year + "." + Utility.DateCorrect(from.Month) + "." + Utility.DateCorrect(from.Day) + ".";
 
-            List<JelentkezoEloszlasModel> list = JelentkezoEloszlasModel.Get(from, to);
-
+            List<JelentkezoEloszlasModel> list = JelentkezoEloszlasModel.GetByProjekt(from, to);
+            //Jelentkezések eloszlása
             ws.Cells[1, 1].Value = "Időszak";
             ws.Cells[2, 1].Value = fromStr + " - " + toStr;
             int summed = 0;
-            int i = 1;
+            int actualColumn = 1;
             foreach (var item in list)
             {
                 if (item.projekt_megnevezes != "")
                 {
-                    ws.Cells[1, i + 1] = item.projekt_megnevezes;
-                    ws.Cells[2, i + 1] = item.darab;
+                    ws.Cells[1, actualColumn + 1] = item.projekt_megnevezes;
+                    ws.Cells[2, actualColumn + 1] = item.darab;
                     summed += item.darab;
-                    i++;
+                    actualColumn++;
                 }
             }
-            ws.Cells[1, i + 1] = "Összesen";
-            ws.Cells[2, i + 1] = summed;
+            //Összegzés
+            ws.Cells[1, actualColumn + 1] = "Összesen";
+            ws.Cells[2, actualColumn + 1] = summed;
+            actualColumn += 2;
+
+            //Jelentkezés típusok meghatározása (Profession vagy weboldal)
+            List<ModelJelentkezesek> listForType = ModelJelentkezesek.getJelentkezesekInner(from, to, "SELECT * FROM jelentkezesek");
+            
+            int type_profession = 0;
+            int type_webform = 0;
+            foreach (var item in listForType)
+            {
+                if (item.profession_type == 1)
+                {
+                    type_profession++;
+                }
+                else if(item.profession_type == 0)
+                {
+                    type_webform++;
+                }
+            }
+
+            ws.Cells[1, actualColumn + 1] = "Profession";
+            ws.Cells[2, actualColumn + 1] = type_profession;
+            actualColumn++;
+            ws.Cells[1, actualColumn + 1] = "Weblap";
+            ws.Cells[2, actualColumn + 1] = type_webform;
+            actualColumn++;
+
             ws.Columns.AutoFit();
 
             ws.SaveAs(statUrl + "Systematic\\JeloltEloszlas\\JeloltekStatisztika " + fromStr + " -" + toStr + ".xlsx");

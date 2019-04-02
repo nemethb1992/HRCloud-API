@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using HRC_Document_Handler.Model;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -7,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static HRC_Document_Handler.Model.Outdated_m;
 
-namespace HRC_Document_Handler.Model
+namespace HRC_Document_Handler
 {
     public class MySql
     {
