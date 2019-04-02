@@ -53,20 +53,20 @@ namespace HRC_Document_Handler.Model
                 email + "', '" +
                 telefon + "', '" +
                 lakhely + "', " +
-                Utils.Utils.correction(id_ertesult.ToString()) + ", " +
-                Utils.Utils.correction(szuldatum.ToString()) + ", " +
-                Utils.Utils.correction(id_neme.ToString()) + "," +
-                Utils.Utils.correction(tapasztalat_ev.ToString()) + "," +
-                Utils.Utils.correction(id_munkakor.ToString()) + "," +
-                Utils.Utils.correction(id_munkakor2.ToString()) + "," +
-                Utils.Utils.correction(id_munkakor3.ToString()) + "," +
-                Utils.Utils.correction(id_vegz_terulet.ToString()) + "," +
-                Utils.Utils.correction(id_nyelvtudas.ToString()) + "," +
-                Utils.Utils.correction(id_nyelvtudas2.ToString()) + ",'" +
-                Utils.Utils.correction(reg_date.ToString(), "") + "'," +
-                Utils.Utils.correction(hirlevel.ToString()) + ",'" +
-                Utils.Utils.correction(megjegyzes.ToString(), "") + "'," +
-                Utils.Utils.correction(profession_type.ToString()) + ");";
+                Utility.correction(id_ertesult.ToString()) + ", " +
+                Utility.correction(szuldatum.ToString()) + ", " +
+                Utility.correction(id_neme.ToString()) + "," +
+                Utility.correction(tapasztalat_ev.ToString()) + "," +
+                Utility.correction(id_munkakor.ToString()) + "," +
+                Utility.correction(id_munkakor2.ToString()) + "," +
+                Utility.correction(id_munkakor3.ToString()) + "," +
+                Utility.correction(id_vegz_terulet.ToString()) + "," +
+                Utility.correction(id_nyelvtudas.ToString()) + "," +
+                Utility.correction(id_nyelvtudas2.ToString()) + ",'" +
+                Utility.correction(reg_date.ToString(), "") + "'," +
+                Utility.correction(hirlevel.ToString()) + ",'" +
+                Utility.correction(megjegyzes.ToString(), "") + "'," +
+                Utility.correction(profession_type.ToString()) + ");";
                 mySql.execute(command);
                 command = "SELECT jeloltek.id FROM jeloltek WHERE jeloltek.email = '" + email + "' AND jeloltek.nev = '" + nev + "'";
                 applicantID = Convert.ToInt16(mySql.uniqueList(command, "jeloltek", 1)[0]);
@@ -91,19 +91,19 @@ namespace HRC_Document_Handler.Model
                  "`email` = '" + email + "', "+
                  "`telefon` = '" + telefon + "', "+ 
                  "`lakhely` = '" + lakhely + @"', "+
-                 "`ertesult` = " + Utils.Utils.correction(id_ertesult.ToString()) + ", " +
-                 "`szuldatum` = " + Utils.Utils.correction(szuldatum.ToString()) + ", " +
-                 "`neme` = " + Utils.Utils.correction(id_neme.ToString()) + ", " +
-                 "`tapasztalat_ev` = " + Utils.Utils.correction(tapasztalat_ev.ToString()) + ", " +
-                 "`munkakor` = " + Utils.Utils.correction(id_munkakor.ToString()) + ", " +
-                 "`munkakor2` = " + Utils.Utils.correction(id_munkakor2.ToString()) + ", " +
-                 "`munkakor3` = " + Utils.Utils.correction(id_munkakor3.ToString()) + ", " +
-                 "`vegz_terulet` = " + Utils.Utils.correction(id_vegz_terulet.ToString()) + ", " +
-                 "`nyelvtudas` = " + Utils.Utils.correction(id_nyelvtudas.ToString()) + ", " +
-                 "`nyelvtudas2` = " + Utils.Utils.correction(id_nyelvtudas2.ToString()) + ", " +
-                 "`reg_date` = '" + Utils.Utils.correction(reg_date.ToString(), "") + "', " +
-                 "`megjegyzes` = '" + Utils.Utils.correction(megjegyzes.ToString(), "") + "', " +
-                 "`hirlevel` = " + Utils.Utils.correction(hirlevel.ToString()) + ", " +
+                 "`ertesult` = " + Utility.correction(id_ertesult.ToString()) + ", " +
+                 "`szuldatum` = " + Utility.correction(szuldatum.ToString()) + ", " +
+                 "`neme` = " + Utility.correction(id_neme.ToString()) + ", " +
+                 "`tapasztalat_ev` = " + Utility.correction(tapasztalat_ev.ToString()) + ", " +
+                 "`munkakor` = " + Utility.correction(id_munkakor.ToString()) + ", " +
+                 "`munkakor2` = " + Utility.correction(id_munkakor2.ToString()) + ", " +
+                 "`munkakor3` = " + Utility.correction(id_munkakor3.ToString()) + ", " +
+                 "`vegz_terulet` = " + Utility.correction(id_vegz_terulet.ToString()) + ", " +
+                 "`nyelvtudas` = " + Utility.correction(id_nyelvtudas.ToString()) + ", " +
+                 "`nyelvtudas2` = " + Utility.correction(id_nyelvtudas2.ToString()) + ", " +
+                 "`reg_date` = '" + Utility.correction(reg_date.ToString(), "") + "', " +
+                 "`megjegyzes` = '" + Utility.correction(megjegyzes.ToString(), "") + "', " +
+                 "`hirlevel` = " + Utility.correction(hirlevel.ToString()) + ", " +
                  "`statusz` = 1, "+
                  "`friss` = 1 " +
                  "WHERE `email` = '" + email + "' ;";

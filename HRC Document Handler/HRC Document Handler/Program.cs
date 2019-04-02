@@ -10,6 +10,7 @@ using System.Deployment;
 using HRC_Document_Handler.Threads;
 using HRC_Document_Handler.Utils;
 using HRC_Document_Handler.Sandbox;
+using HRC_Document_Handler.Enum;
 
 namespace HRC_Document_Handler
 {
@@ -22,6 +23,7 @@ namespace HRC_Document_Handler
             Console.WriteLine(cr.header());
             Thread dbThread = new Thread(new ThreadStart(DbSynchroThread.listener));
             Thread mailThread = new Thread(new ThreadStart(MailSenderThread.listener));
+            Thread statisticThread = new Thread(new ThreadStart(AutoStatisticThread.listener));
             do
             {
                 string suspend = "";
@@ -29,12 +31,14 @@ namespace HRC_Document_Handler
                 {
                     do
                     {
+                        statisticThread.Start();
                         mailThread.Start();
                         dbThread.Start();
                         Console.WriteLine("Press 'x' to pause.");
                         suspend = Console.ReadLine();
                         if (suspend == "x")
                         {
+                            statisticThread.Suspend();
                             mailThread.Suspend();
                             dbThread.Suspend();
                             Console.WriteLine("Suspended");
@@ -44,6 +48,7 @@ namespace HRC_Document_Handler
                                 Console.Clear();
                                 Console.WriteLine(cr.header());
                                 Console.WriteLine("Started");
+                                statisticThread.Suspend();
                                 mailThread.Resume();
                                 dbThread.Resume();
                             }

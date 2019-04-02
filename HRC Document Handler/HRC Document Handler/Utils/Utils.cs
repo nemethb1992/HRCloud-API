@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HRC_Document_Handler.Utils
+namespace HRC_Document_Handler
 {
-    public class Utils
+    public class Utility
     {
         public static string correction(string value, string conditionValue = "0")
         {
@@ -18,6 +19,14 @@ namespace HRC_Document_Handler.Utils
         {
             Model.MySql mySql = new Model.MySql(true);
             string command = "DELETE FROM hrportalweb." + table + ";";
+            mySql.execute(command);
+            mySql.dbClose();
+        }
+        
+        public static void deleteTable(string table)
+        {
+            Model.MySql mySql = new Model.MySql();
+            string command = "DELETE FROM " + table + ";";
             mySql.execute(command);
             mySql.dbClose();
         }
@@ -33,6 +42,18 @@ namespace HRC_Document_Handler.Utils
             {
                 return false;
             }
+        }
+
+        public static string DateCorrect(int num)
+        {
+            return (num < 10 ? "0"+num.ToString() : num.ToString());
+        }
+
+        public static void AbortExcel()
+        {
+            foreach (Process clsProcess in Process.GetProcesses())
+                if (clsProcess.ProcessName.Equals("EXCEL"))  //Process Excel?
+                    clsProcess.Kill();
         }
 
     }

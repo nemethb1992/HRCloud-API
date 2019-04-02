@@ -1,29 +1,25 @@
-﻿using HRC_Document_Handler.Utils;
+﻿using HRC_Document_Handler.Controller;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace HRC_Document_Handler.Threads
 {
-    class MailSenderThread
+    class AutoStatisticThread
     {
         public static void listener()
         {
-            Console.WriteLine("\n - Mail handler is running...");
+            Console.WriteLine("\n - Statistic automatisation is running...");
             while (true)
             {
                 try
                 {
-                    new EmailSender();
+                    new AutomatizedStatistics();
                 }
                 catch (Exception)
                 {
                     //Hibalog
                 }
-                Thread.Sleep(60000);
+                Thread.Sleep(1800000);
             }
         }
     }

@@ -32,8 +32,8 @@
     <SuiteName>Phoenix Mecano Kecskemét Kft.</SuiteName>
     <WebPage>publish.htm</WebPage>
     <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>8</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -125,6 +125,10 @@
     <Reference Include="MailKit, Version=2.1.0.0, Culture=neutral, PublicKeyToken=4e064fe7c44a8f1b, processorArchitecture=MSIL">
       <HintPath>..\packages\MailKit.2.1.2\lib\net45\MailKit.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="MimeKit, Version=2.1.0.0, Culture=neutral, PublicKeyToken=bede1c8a46c66814, processorArchitecture=MSIL">
       <HintPath>..\packages\MimeKit.2.1.2\lib\net45\MimeKit.dll</HintPath>
     </Reference>
@@ -155,19 +159,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\Applicant.cs" />
+    <Compile Include="Controller\AutomatizedStatistics.cs" />
     <Compile Include="Controller\DatabaseSynchronizer.cs" />
-    <Compile Include="Controller\EmailImap.cs" />
     <Compile Include="Controller\Folder.cs" />
     <Compile Include="Controller\Outdated_cont.cs" />
     <Compile Include="Controller\Profession.cs" />
+    <Compile Include="Enum\Enum.cs" />
     <Compile Include="Model\ApplicantModel.cs" />
     <Compile Include="Model\DocumentModel.cs" />
     <Compile Include="Model\MailData.cs" />
     <Compile Include="Model\ProjectConnection.cs" />
     <Compile Include="Model\ProjectConnectionModel.cs" />
+    <Compile Include="Model\StatisticModel\JelentkezoEloszlasModel.cs" />
+    <Compile Include="Model\StatisticStampModel.cs" />
     <Compile Include="Model\WebResourceModel.cs" />
     <Compile Include="Public\EmailTemplates.cs" />
     <Compile Include="Sandbox\TestClass.cs" />
+    <Compile Include="Threads\AutoStatisticThread.cs" />
     <Compile Include="Threads\MailSenderThread.cs" />
     <Compile Include="Utils\ConsoleRender.cs" />
     <Compile Include="Controller\EmailSender.cs" />
@@ -183,7 +191,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Threads\DbSynchroThread.cs" />
-    <Compile Include="Threads\ImapThread.cs" />
     <Compile Include="Utils\Utils.cs" />
   </ItemGroup>
   <ItemGroup>

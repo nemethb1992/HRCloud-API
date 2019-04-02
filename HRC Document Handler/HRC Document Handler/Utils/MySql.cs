@@ -231,7 +231,8 @@ namespace HRC_Document_Handler.Model
             }
             return data;
         }
-        public FolderModel ProfessionURL()
+
+        public FolderModel StatisticURL()
         {
             FolderModel data = null;
             if (this.dbOpen() == true)

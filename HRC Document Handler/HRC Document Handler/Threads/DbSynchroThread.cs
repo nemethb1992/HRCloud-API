@@ -16,8 +16,14 @@ namespace HRC_Document_Handler.Threads
             Console.WriteLine("\n - Database synchronisation is running...");
             while (true)
             {
-                new DatabaseSynchronizer();
-                //Console.WriteLine("\n (Web Db) Last activity: - " + DateTime.Now);
+                try
+                {
+                    new DatabaseSynchronizer();
+                }
+                catch (Exception)
+                {
+                    //Hibalog
+                }
                 Thread.Sleep(120000); 
             }
         }

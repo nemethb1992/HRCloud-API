@@ -21,7 +21,7 @@ namespace HRC_Document_Handler.Controller
                 mySql = new Model.MySql();
                 mySqlWeb = new Model.MySql(true);
                 appURL = mySql.ApplicantURL().url;
-                if (Utils.Utils.hasWriteAccessToFolder(appURL))
+                if (Utility.hasWriteAccessToFolder(appURL))
                 {
                     synchronizeApplicants();
                 }
@@ -92,31 +92,38 @@ namespace HRC_Document_Handler.Controller
         private void synchronizeResources()
         {
             List<ModelProjektek> projektList = ModelProjektek.getProjektek("SELECT id, megnevezes_projekt, statusz, fel_datum FROM projektek WHERE statusz=1");
-            Utils.Utils.deleteWebTable("projektek");
+            Utility.deleteWebTable("projektek");
             foreach (var item in projektList)
             {
                 item.insertWeb(mySqlWeb);
             }
 
             List<ModelErtesulesek> ertesulesekList = ModelErtesulesek.getErtesulesek("SELECT id, ertesules_megnevezes FROM ertesulesek");
-            Utils.Utils.deleteWebTable("ertesulesek");
+            Utility.deleteWebTable("ertesulesek");
             foreach (var item in ertesulesekList)
             {
                 item.insertWeb(mySqlWeb);
             }
 
             List<ModelNyelv> nyelvList = ModelNyelv.getNyelv("SELECT id, megnevezes_nyelv FROM nyelv");
-            Utils.Utils.deleteWebTable("nyelv");
+            Utility.deleteWebTable("nyelv");
             foreach (var item in nyelvList)
             {
                 item.insertWeb(mySqlWeb);
             }
 
             List<ModelVegzettseg> vegzettsegList = ModelVegzettseg.getVegzettsegek("SELECT id, megnevezes_vegzettseg FROM vegzettsegek");
-            Utils.Utils.deleteWebTable("vegzettsegek");
+            Utility.deleteWebTable("vegzettsegek");
             foreach (var item in vegzettsegList)
             {
                 item.insertWeb(mySqlWeb);
+            }
+
+            List<ModelRegisztraltak> regisztraltakList = ModelRegisztraltak.getRegisztraltak("SELECT email, projekt_id, reg_date FROM regisztraltak");
+            Utility.deleteTable("regisztraltak");
+            foreach (var item in regisztraltakList)
+            {
+                item.Insert(mySql);
             }
         }
     }
