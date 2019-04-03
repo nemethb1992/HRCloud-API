@@ -31,9 +31,9 @@ namespace HRC_Document_Handler
                 {
                     do
                     {
-                        statisticThread.Start();
-                        mailThread.Start();
                         dbThread.Start();
+                        mailThread.Start();
+                        statisticThread.Start();
                         Console.WriteLine("Press 'x' to pause.");
                         suspend = Console.ReadLine();
                         if (suspend == "x")
