@@ -46,7 +46,7 @@ namespace HRC_Document_Handler.Controller
             ws = (Worksheet)wb.ActiveSheet;
 
 
-            DateTime from = to.AddDays(-7);
+            DateTime from = to.AddDays(-6);
 
             string toStr = to.Year + "." + Utility.DateCorrect(to.Month) + "." + Utility.DateCorrect(to.Day) + ".";
             string fromStr = from.Year + "." + Utility.DateCorrect(from.Month) + "." + Utility.DateCorrect(from.Day) + ".";
