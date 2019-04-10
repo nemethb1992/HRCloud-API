@@ -69,7 +69,7 @@ namespace HRC_Document_Handler.Model
                 Utility.correction(profession_type.ToString()) + ");";
                 mySql.execute(command);
                 command = "SELECT jeloltek.id FROM jeloltek WHERE jeloltek.email = '" + email + "' AND jeloltek.nev = '" + nev + "'";
-                applicantID = Convert.ToInt16(mySql.uniqueList(command, "jeloltek", 1)[0]);
+                applicantID = Convert.ToInt16(mySql.uniqueList(command, new string[]{"jeloltek"})[0]);
             }
             catch (Exception)
             {
@@ -110,7 +110,7 @@ namespace HRC_Document_Handler.Model
 
                 mySql.execute(command);
                 command = "SELECT jeloltek.id FROM jeloltek WHERE jeloltek.email = '" + email + "'";
-                applicantID = Convert.ToInt16(mySql.uniqueList(command, "jeloltek", 1)[0]);
+                applicantID = Convert.ToInt16(mySql.uniqueList(command, new string[] { "jeloltek" })[0]);
 
             }
             catch (Exception)

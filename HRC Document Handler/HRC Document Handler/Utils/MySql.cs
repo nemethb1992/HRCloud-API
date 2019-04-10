@@ -15,21 +15,35 @@ namespace HRC_Document_Handler
         //string connectionString = "Data Source = s7.nethely.hu; Initial Catalog = pmkcvtest; User ID=pmkcvtest; Password=pmkcvtest2018";
         //string connectionString = "Data Source = 192.168.144.189; Port=3306; Initial Catalog = pmkcvtest; User ID=hr-admin; Password=pmhr2018";
         //string connectionString = "Data Source = vpn.phoenix-mecano.hu; Port=29920; Initial Catalog = pmkcvtest; User ID=hr-admin; Password=pmhr2018";
-        private const string CONNECTION_URL_1 = "Data Source = 192.168.144.189; Port=3306; Initial Catalog = pmkcvtest; User ID=hr-admin; Password=pmhr2018; charset=utf8;";
-        private const string CONNECTION_URL_2 = "Data Source = 192.168.144.189; Port=3306; Initial Catalog = pmhrdemo; User ID=hr-admin; Password=pmhr2018;  charset=utf8;";
+        private const string CONNECTION_URL_ACTIVE = "Data Source = 192.168.144.189; Port=3306; Initial Catalog = pmkcvtest; User ID=hr-admin; Password=pmhr2018; charset=utf8;";
+        private const string CONNECTION_URL_TEST = "Data Source = 192.168.144.189; Port=3306; Initial Catalog = hrportal_test; User ID=hr-admin; Password=pmhr2018;  charset=utf8;";
         private const string WEB_DATABASE_CONNECTION = "Data Source = mysql.nethely.hu; Port=3306; Initial Catalog = hrportalweb; User ID=hrportalweb; Password=pmhr2018!;  charset=utf8;";
 
         public MySqlConnection conn;
         public MySqlCommand cmd;
         public MySqlDataReader sdr;
-
+        public MySql(int isTest)
+        {
+            if (conn == null && isTest == 1)
+            {
+                try
+                {
+                    conn = new MySqlConnection(CONNECTION_URL_TEST);
+                }
+                catch (MySqlException mysqlex)
+                {
+                    Console.WriteLine(mysqlex.ToString());
+                    throw;
+                }
+            }
+        }
         public MySql(bool publicDb = false)
         {
             if (conn == null)
             {
                 try
                 {
-                    conn = new MySqlConnection((publicDb ? WEB_DATABASE_CONNECTION : CONNECTION_URL_1));
+                    conn = new MySqlConnection((publicDb ? WEB_DATABASE_CONNECTION : CONNECTION_URL_ACTIVE));
                 }
                 catch (MySqlException mysqlex)
                 {
@@ -78,7 +92,7 @@ namespace HRC_Document_Handler
 
   
 
-        public List<string> uniqueList(string command, string table, int b)
+        public List<string> uniqueList(string command, string[] table)
         {
             List<string> dataSource = new List<string>();
             if (dbOpen() == true)
@@ -88,7 +102,7 @@ namespace HRC_Document_Handler
                 int i;
                 while (sdr.Read())
                 {
-                    for (i = 0; i < b; i++)
+                    for (i = 0; i < table.Length; i++)
                     {
                         dataSource.Add(sdr[i].ToString());
                     }

@@ -17,7 +17,7 @@ namespace HRC_Document_Handler.Threads
             {
                 try
                 {
-                    //new EmailSender();
+                    new EmailSender();
                 }
                 catch (Exception e)
                 {
