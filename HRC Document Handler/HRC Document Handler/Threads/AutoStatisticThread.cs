@@ -14,7 +14,7 @@ namespace HRC_Document_Handler.Threads
             {
                 try
                 {
-                    new AutomatizedStatistics();
+                    //new AutomatizedStatistics();
                 }
                 catch (Exception e)
                 {

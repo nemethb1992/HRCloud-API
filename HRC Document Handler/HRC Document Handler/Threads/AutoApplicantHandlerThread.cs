@@ -1,4 +1,5 @@
-﻿using HRC_Document_Handler.Utils;
+﻿using HRC_Document_Handler.Controller;
+using HRC_Document_Handler.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,22 +9,22 @@ using System.Threading.Tasks;
 
 namespace HRC_Document_Handler.Threads
 {
-    class MailSenderThread
+    class AutoApplicantHandlerThread
     {
         public static void listener()
         {
-            Console.WriteLine("\n - Mail handler is running...");
+            Console.WriteLine("\n - Applicant handling automatisation is running...");
             while (true)
             {
                 try
                 {
-                    //new EmailSender();
+                    //new ApplicantHandling();
                 }
                 catch (Exception e)
                 {
-                    Error.Log(e.ToString(), "EmailSender");
+                    Error.Log(e.ToString(), "ApplicantHandling");
                 }
-                Thread.Sleep(60000);
+                Thread.Sleep(1800000);
             }
         }
     }

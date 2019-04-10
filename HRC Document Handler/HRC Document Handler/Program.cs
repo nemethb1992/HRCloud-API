@@ -4,8 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Deployment;
 using HRC_Document_Handler.Threads;
 using HRC_Document_Handler.Utils;
@@ -21,9 +19,6 @@ namespace HRC_Document_Handler
         {
             ConsoleRender cr = new ConsoleRender();
             Console.WriteLine(cr.header());
-            Thread dbThread = new Thread(new ThreadStart(DbSynchroThread.listener));
-            Thread mailThread = new Thread(new ThreadStart(MailSenderThread.listener));
-            Thread statisticThread = new Thread(new ThreadStart(AutoStatisticThread.listener));
             do
             {
                 string suspend = "";
@@ -31,26 +26,22 @@ namespace HRC_Document_Handler
                 {
                     do
                     {
-                        dbThread.Start();
-                        mailThread.Start();
-                        statisticThread.Start();
                         Console.WriteLine("Press 'x' to pause.");
+                        ThreadHandler thread = new ThreadHandler();
+                        thread.Start();
+
                         suspend = Console.ReadLine();
                         if (suspend == "x")
                         {
-                            statisticThread.Suspend();
-                            mailThread.Suspend();
-                            dbThread.Suspend();
-                            Console.WriteLine("Suspended");
+                            thread.Pause();
+                            Console.WriteLine("Suspended!");
                             Console.WriteLine("Press 'y' to start again.");
                             if (Console.ReadLine() == "y")
                             {
                                 Console.Clear();
                                 Console.WriteLine(cr.header());
                                 Console.WriteLine("Started");
-                                statisticThread.Suspend();
-                                mailThread.Resume();
-                                dbThread.Resume();
+                                thread.Resume();
                             }
                         }
 

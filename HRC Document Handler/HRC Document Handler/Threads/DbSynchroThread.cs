@@ -18,7 +18,7 @@ namespace HRC_Document_Handler.Threads
             {
                 try
                 {
-                    new DatabaseSynchronizer();
+                    //new DatabaseSynchronizer();
                 }
                 catch (Exception e)
                 {

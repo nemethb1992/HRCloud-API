@@ -159,6 +159,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\Applicant.cs" />
+    <Compile Include="Controller\ApplicantHandling.cs" />
     <Compile Include="Controller\AutomatizedStatistics.cs" />
     <Compile Include="Controller\DatabaseSynchronizer.cs" />
     <Compile Include="Controller\Folder.cs" />
@@ -176,8 +177,10 @@
     <Compile Include="Model\WebResourceModel.cs" />
     <Compile Include="Public\EmailTemplates.cs" />
     <Compile Include="Sandbox\TestClass.cs" />
+    <Compile Include="Threads\AutoApplicantHandlerThread.cs" />
     <Compile Include="Threads\AutoStatisticThread.cs" />
     <Compile Include="Threads\MailSenderThread.cs" />
+    <Compile Include="Threads\ThreadHandler.cs" />
     <Compile Include="Utils\ConsoleRender.cs" />
     <Compile Include="Controller\EmailSender.cs" />
     <Compile Include="Utils\Error.cs" />
