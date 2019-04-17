@@ -19,8 +19,7 @@ namespace HRC_Document_Handler.Model.StatisticModel
 
             if (mySql.dbOpen() == true)
             {
-                string command = "SELECT projekt_megnevezes, count(id) as darab FROM jelentkezesek "+
-                               "WHERE jelentkezesek.reg_date >= '" + from.Year + "." + Utility.DateCorrect(from.Month) + "." + Utility.DateCorrect(from.Day) + "' AND jelentkezesek.reg_date <= '" + to.Year + "." + Utility.DateCorrect(to.Month) + "." + Utility.DateCorrect(to.Day) + "' GROUP BY jelentkezesek.projekt_megnevezes";
+                string command = "SELECT projekt_megnevezes, count(id) as darab FROM jelentkezesek WHERE jelentkezesek.reg_date >= '" + from.Year + "." + Utility.DateCorrect(from.Month) + "." + Utility.DateCorrect(from.Day) + "' AND jelentkezesek.reg_date <= '" + to.Year + "." + Utility.DateCorrect(to.Month) + "." + Utility.DateCorrect(to.Day) + "' GROUP BY jelentkezesek.projekt_megnevezes";
                 mySql.cmd = new MySqlCommand(command, mySql.conn);
                 mySql.sdr = mySql.cmd.ExecuteReader();
 
