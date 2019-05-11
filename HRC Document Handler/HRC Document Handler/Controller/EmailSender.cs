@@ -13,12 +13,22 @@ namespace HRC_Document_Handler.Utils
         public EmailSender()
         {
             List<MailData> mails = MailData.GetMails();
-            if(mails.Count > 0)
+            List<MailData> testMails = MailData.GetMails(true);
+            if (mails.Count > 0)
             {
                 foreach (var mail in mails)
                 {
                     send(mail);
                     mail.setSent();
+                }
+            }
+
+            if (testMails.Count > 0)
+            {
+                foreach (var mail in testMails)
+                {
+                    send(mail);
+                    mail.setSent(true);
                 }
             }
 

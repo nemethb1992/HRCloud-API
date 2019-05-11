@@ -17,10 +17,18 @@ namespace HRC_Document_Handler.Model
         public int state { get; set; }
         public string date { get; set; }
 
-        public static List<MailData> GetMails()
+        public static List<MailData> GetMails(bool testMails = false)
         {
             List<MailData> list = new List<MailData>();
-            MySql mySql = new MySql();
+            MySql mySql;
+            if(testMails)
+            {
+                mySql = new MySql(1);
+            }
+            else
+            {
+                mySql = new MySql();
+            }
             if (mySql.dbOpen() == true)
             {
                 string command = "SELECT * FROM email_storage WHERE state=0";
@@ -46,10 +54,19 @@ namespace HRC_Document_Handler.Model
             return list;
         }
 
-        public void setSent()
+        public void setSent(bool testMails = false)
         {
             state = 1;
-            MySql mySql = new MySql();
+            MySql mySql;
+
+            if (testMails)
+            {
+                mySql = new MySql(1);
+            }
+            else
+            {
+                mySql = new MySql();
+            }
             mySql.execute("UPDATE `email_storage` SET `state` = 1 WHERE `id` = "+id+";");
         }
     }
