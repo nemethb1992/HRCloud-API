@@ -37,7 +37,7 @@ namespace HRC_Document_Handler.Model
         public string folderUrl { get; set; }
         public int statusz { get; set; }
         public int hirlevel { get; set; }
-        public int profession_type { get; set; }
+        public int kategoria { get; set; }
         public string project { get; set; }
 
         public int Insert()  //javított
@@ -47,7 +47,7 @@ namespace HRC_Document_Handler.Model
             int applicantID = 0;
             try
             {
-                string command = "INSERT INTO jeloltek (`id`, `nev`, `email`, `telefon`, `lakhely`, `ertesult`, `szuldatum`, `neme`, `tapasztalat_ev`, `munkakor`, `munkakor2`, `munkakor3`, `vegz_terulet`, `nyelvtudas`,`nyelvtudas2`, `reg_date`, `hirlevel`, `megjegyzes`, `profession_type`) " +
+                string command = "INSERT INTO jeloltek (`id`, `nev`, `email`, `telefon`, `lakhely`, `ertesult`, `szuldatum`, `neme`, `tapasztalat_ev`, `munkakor`, `munkakor2`, `munkakor3`, `vegz_terulet`, `nyelvtudas`,`nyelvtudas2`, `reg_date`, `hirlevel`, `megjegyzes`, `kategoria`) " +
                 "VALUES(NULL, '" +
                 nev + "',  '" +
                 email + "', '" +
@@ -66,7 +66,7 @@ namespace HRC_Document_Handler.Model
                 Utility.correction(reg_date.ToString(), "") + "'," +
                 Utility.correction(hirlevel.ToString()) + ",'" +
                 Utility.correction(megjegyzes.ToString(), "") + "'," +
-                Utility.correction(profession_type.ToString()) + ");";
+                Utility.correction(kategoria.ToString()) + ");";
                 mySql.execute(command);
                 command = "SELECT jeloltek.id FROM jeloltek WHERE jeloltek.email = '" + email + "' AND jeloltek.nev = '" + nev + "'";
                 applicantID = Convert.ToInt16(mySql.uniqueList(command, new string[]{"jeloltek"})[0]);
@@ -153,7 +153,7 @@ namespace HRC_Document_Handler.Model
                         reg_date = mySqlWeb.sdr["reg_date"].ToString(),
                         megjegyzes = mySqlWeb.sdr["megjegyzes"].ToString(),
                         hirlevel = Convert.ToInt32(mySqlWeb.sdr["hirlevel"]),
-                        profession_type = Convert.ToInt32(mySqlWeb.sdr["profession_type"])
+                        kategoria = Convert.ToInt32(mySqlWeb.sdr["kategoria"])
                     });
                 }
                 mySqlWeb.sdr.Close();

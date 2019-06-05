@@ -12,7 +12,7 @@ namespace HRC_Document_Handler.Model.StatisticModel
         public int id { get; set; }
         public int projekt_id { get; set; }
         public string projekt_megnevezes { get; set; }
-        public int profession_type { get; set; }
+        public int kategoria { get; set; }
         public string reg_date { get; set; }
 
         public static List<ModelJelentkezesek> getJelentkezesekWeb(string query)
@@ -30,7 +30,7 @@ namespace HRC_Document_Handler.Model.StatisticModel
                         id = Convert.ToInt32(mySql.sdr["id"]),
                         projekt_id = Convert.ToInt32(mySql.sdr["projekt_id"]),
                         projekt_megnevezes = mySql.sdr["projekt_megnevezes"].ToString(),
-                        profession_type = Convert.ToInt32(mySql.sdr["profession_type"]),
+                        kategoria = Convert.ToInt32(mySql.sdr["kategoria"]),
                         reg_date = mySql.sdr["reg_date"].ToString()
 
                     });
@@ -55,7 +55,7 @@ namespace HRC_Document_Handler.Model.StatisticModel
                         id = Convert.ToInt32(mySql.sdr["id"]),
                         projekt_id = Convert.ToInt32(mySql.sdr["projekt_id"]),
                         projekt_megnevezes = mySql.sdr["projekt_megnevezes"].ToString(),
-                        profession_type = Convert.ToInt32(mySql.sdr["profession_type"]),
+                        kategoria = Convert.ToInt32(mySql.sdr["kategoria"]),
                         reg_date = mySql.sdr["reg_date"].ToString()
 
                     });
@@ -80,7 +80,7 @@ namespace HRC_Document_Handler.Model.StatisticModel
                         id = Convert.ToInt32(mySql.sdr["id"]),
                         projekt_id = Convert.ToInt32(mySql.sdr["projekt_id"]),
                         projekt_megnevezes = mySql.sdr["projekt_megnevezes"].ToString(),
-                        profession_type = Convert.ToInt32(mySql.sdr["profession_type"]),
+                        kategoria = Convert.ToInt32(mySql.sdr["kategoria"]),
                         reg_date = mySql.sdr["reg_date"].ToString()
 
                     });
@@ -92,7 +92,7 @@ namespace HRC_Document_Handler.Model.StatisticModel
 
         public void Insert(MySql mysql)
         {
-            string command = "INSERT INTO `jelentkezesek`(`projekt_id`, `projekt_megnevezes`, `profession_type`, `reg_date`) VALUES (" + projekt_id + ",'" + projekt_megnevezes + "'," + profession_type + ",'" + reg_date + "')";
+            string command = "INSERT INTO `jelentkezesek`(`projekt_id`, `projekt_megnevezes`, `kategoria`, `reg_date`) VALUES (" + projekt_id + ",'" + projekt_megnevezes + "'," + kategoria + ",'" + reg_date + "')";
             mysql.execute(command);
         }
     }

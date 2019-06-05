@@ -79,11 +79,11 @@ namespace HRC_Document_Handler.Controller
             int type_webform = 0;
             foreach (var item in listForType)
             {
-                if (item.profession_type == 1)
+                if (item.kategoria == 1)
                 {
                     type_profession++;
                 }
-                else if(item.profession_type == 0)
+                else if(item.kategoria == 0)
                 {
                     type_webform++;
                 }
