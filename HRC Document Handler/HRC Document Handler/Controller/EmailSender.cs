@@ -65,7 +65,7 @@ namespace HRC_Document_Handler.Utils
                     }
                 }
             }
-            catch (System.Net.Mail.SmtpException ex)
+            catch (System.Net.Mail.SmtpException)
             {
 
             }
