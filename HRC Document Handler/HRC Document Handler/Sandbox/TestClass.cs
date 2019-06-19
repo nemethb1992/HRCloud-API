@@ -55,6 +55,7 @@ namespace HRC_Document_Handler.Sandbox
             {
                 string command = "UPDATE `regisztraltak` SET `projekt_id`="+item.projekt_id+",`reg_date`='"+item.datum+"' WHERE email = '"+item.email+"'";
                 mySqlWeb.execute(command);
+                mySqlWeb.dbClose();
             }
         }
 

@@ -68,6 +68,7 @@ namespace HRC_Document_Handler.Model
                 mySql = new MySql();
             }
             mySql.execute("UPDATE `email_storage` SET `state` = 1 WHERE `id` = "+id+";");
+            mySql.dbClose();
         }
     }
 }

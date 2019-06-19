@@ -38,8 +38,9 @@ namespace HRC_Document_Handler.Model
 
         public void insertWeb(MySql mySqlWeb)
         {
-            string command = "INSERT INTO `hrportalweb`.`vegzettsegek`(`id`, `megnevezes_vegzettseg`) VALUES (" + id + ",'" + megnevezes_vegzettseg + "')";
+            string command = "INSERT INTO `vegzettsegek`(`id`, `megnevezes_vegzettseg`) VALUES (" + id + ",'" + megnevezes_vegzettseg + "')";
             mySqlWeb.execute(command);
+            mySqlWeb.dbClose();
         }
     }
 
@@ -74,10 +75,46 @@ namespace HRC_Document_Handler.Model
         {
             string command = "INSERT INTO `nyelv`(`id`, `megnevezes_nyelv`) VALUES (" + id + ",'" + nyelv + "')";
             mySqlWeb.execute(command);
+            mySqlWeb.dbClose();
         }
     }
 
-    
+    public class ModelFreelancerList
+    {
+        public int id { get; set; }
+        public string name { get; set; }
+        public string email { get; set; }
+
+        public static List<ModelFreelancerList> getFreelancerList(string command)
+        {
+            MySql mySql = new MySql();
+            List<ModelFreelancerList> list = new List<ModelFreelancerList>();
+            if (mySql.dbOpen() == true)
+            {
+                mySql.cmd = new MySqlCommand(command, mySql.conn);
+                mySql.sdr = mySql.cmd.ExecuteReader();
+                while (mySql.sdr.Read())
+                {
+                    list.Add(new ModelFreelancerList
+                    {
+                        id = Convert.ToInt32(mySql.sdr["id"]),
+                        name = mySql.sdr["name"].ToString(),
+                        email = mySql.sdr["email"].ToString()
+                    });
+                }
+                mySql.sdr.Close();
+            }
+            return list;
+        }
+
+        public void insertWeb(MySql mySqlWeb)
+        {
+            string command = "INSERT INTO `freelancer_list`(`id`, `name`, `email`) VALUES (" + id + ",'" + name + "','" + email + "')";
+            mySqlWeb.execute(command);
+            mySqlWeb.dbClose();
+        }
+
+    }
 
     public class ModelErtesulesek
     {
@@ -107,8 +144,9 @@ namespace HRC_Document_Handler.Model
 
         public void insertWeb(MySql mySqlWeb)
         {
-            string command = "INSERT INTO `hrportalweb`.`ertesulesek`(`id`, `ertesules_megnevezes`) VALUES (" + id + ",'" + ertesules_megnevezes + "')";
+            string command = "INSERT INTO `ertesulesek`(`id`, `ertesules_megnevezes`) VALUES (" + id + ",'" + ertesules_megnevezes + "')";
             mySqlWeb.execute(command);
+            mySqlWeb.dbClose();
         }
 
     }
@@ -145,8 +183,9 @@ namespace HRC_Document_Handler.Model
 
         public void insertWeb(MySql mySqlWeb)
         {
-            string command = "INSERT INTO `hrportalweb`.`projektek`(`id`, `megnevezes_projekt`, `statusz`, `fel_datum`) VALUES (" + id + ",'" + megnevezes_projekt + "'," + statusz + ",'" + fel_datum + "')";
+            string command = "INSERT INTO `projektek`(`id`, `megnevezes_projekt`, `statusz`, `fel_datum`) VALUES (" + id + ",'" + megnevezes_projekt + "'," + statusz + ",'" + fel_datum + "')";
             mySqlWeb.execute(command);
+            mySqlWeb.dbClose();
         }
     }
 }

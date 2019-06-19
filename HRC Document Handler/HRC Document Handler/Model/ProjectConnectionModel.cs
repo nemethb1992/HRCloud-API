@@ -11,7 +11,7 @@ namespace HRC_Document_Handler.Model
     {
         public int id { get; set; }
         public int projekt_id { get; set; }
-        public string email { get; set; }
+        public int jelolt_id { get; set; }
         public string date { get; set; }
 
         public static List<ProjectConnectionModel> getListWeb(string command)
@@ -29,7 +29,7 @@ namespace HRC_Document_Handler.Model
                     {
                         id = Convert.ToInt32(mySqlWeb.sdr["id"]),
                         projekt_id = Convert.ToInt32(mySqlWeb.sdr["projekt_id"]),
-                        email = mySqlWeb.sdr["email"].ToString(),
+                        jelolt_id = Convert.ToInt32(mySqlWeb.sdr["jelolt_id"]),
                         date = mySqlWeb.sdr["date"].ToString()
                     });
                 }
@@ -38,16 +38,25 @@ namespace HRC_Document_Handler.Model
             }
             return list;
         }
+        
         public static void insertDb(ProjectConnectionModel data, int applicantID)
         {
             MySql mySql = new MySql();
-            string command = "SELECT count(`projekt_jelolt_kapcs`.`id`) as count FROM `pmkcvtest`.`projekt_jelolt_kapcs` WHERE `projekt_id` = "+data.projekt_id+ " AND `jelolt_id` = " + applicantID+"";
+            string command = "SELECT count(`projekt_jelolt_kapcs`.`id`) as count FROM `projekt_jelolt_kapcs` WHERE `projekt_id` = "+data.projekt_id+ " AND `jelolt_id` = " + applicantID+"";
             string result = mySql.SqlSingleQuery(command, "count");
             if (result == "0")
             {
-                mySql.execute(@"INSERT INTO `pmkcvtest`.`projekt_jelolt_kapcs` (`projekt_id`, `jelolt_id`,`hr_id`, `allapota`, `datum`) VALUES (" + data.projekt_id + "," + applicantID + ",default,default,'" + data.date + "') ");
+                mySql.execute(@"INSERT INTO `projekt_jelolt_kapcs` (`projekt_id`, `jelolt_id`,`hr_id`, `allapota`, `datum`) VALUES (" + data.projekt_id + "," + applicantID + ",default,default,'" + data.date + "') ");
             }
+            mySql.dbClose();
+        }
+        public static void insertDb_kulsos(ModelFullApplicant applicant, int applicantID)
+        {
+            MySql mySql = new MySql();
+
+                mySql.execute(@"INSERT INTO `projekt_jelolt_kapcs_kulsos` (`projekt_id`, `jelolt_id`, `datum`) VALUES (" + applicant.projekt_id + "," + applicantID + "," + applicant.reg_date + "') ");
+            mySql.dbClose();
         }
 
-        }
+    }
 }

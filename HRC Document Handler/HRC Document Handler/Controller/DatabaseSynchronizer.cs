@@ -47,44 +47,54 @@ namespace HRC_Document_Handler.Controller
             List<ModelFullApplicant> webList = ModelWebApplicant.getList("SELECT * FROM jeloltek");
             foreach (ModelFullApplicant applicant in webList)
             {
-                if (Applicant.isExists(applicant.email) == 0)
+                if (Applicant.isExists(applicant.email) == 0 || applicant.kategoria == 3)
                 {
                     int applicantID = applicant.Insert();
                     if (applicantID != 0)
                     {
-                        List<ProjectConnectionModel> connectedProjects = ProjectConnectionModel.getListWeb("SELECT * FROM projekt_jelolt_kapcs WHERE email = '" + applicant.email + "'");
-                        foreach (var projects in connectedProjects)
+
+                        if (applicant.kategoria == 3)
                         {
-                            ProjectConnectionModel.insertDb(projects, applicantID);
+                            ProjectConnectionModel.insertDb_kulsos(applicant, applicantID);
                         }
-                        //TODO: email kiküldése
-                        applicant.deleteWeb(applicant.email);
-                        List<DocumentModel> docList = DocumentModel.GetDocuments(applicant.email);
+                        else
+                        {
+                            List<ProjectConnectionModel> connectedProjects = ProjectConnectionModel.getListWeb("SELECT * FROM projekt_jelolt_kapcs WHERE jelolt_id = " + applicant.id + "");
+                            foreach (var projects in connectedProjects)
+                            {
+                                ProjectConnectionModel.insertDb(projects, applicantID);
+
+                            }
+                        }
+                        applicant.deleteWeb(applicant.id);
+                        List<DocumentModel> docList = DocumentModel.GetDocuments(applicant.id);
                         string path = appURL + applicantID.ToString() + "\\";
                         foreach (var doc in docList)
                         {
                             Applicant.SaveDocument(path, doc.document_name, doc.document);
-                            doc.deleteDocumentWeb(applicant.email);
+                            doc.deleteDocumentWeb(applicant.id);
                         }
+                        //TODO: email kiküldése
+
                     }
                 }
                 else
                 {
                     int applicantID = applicant.Update(applicant.email);
 
-                    List<ProjectConnectionModel> connectedProjects = ProjectConnectionModel.getListWeb("SELECT * FROM projekt_jelolt_kapcs WHERE email = '" + applicant.email + "'");
+                    List<ProjectConnectionModel> connectedProjects = ProjectConnectionModel.getListWeb("SELECT * FROM projekt_jelolt_kapcs WHERE jelolt_id = " + applicant.id + "");
                     foreach (var projects in connectedProjects)
                     {
                         ProjectConnectionModel.insertDb(projects, applicantID);
                     }
                     //TODO: email kiküldése
-                    applicant.deleteWeb(applicant.email);
-                    List<DocumentModel> docList = DocumentModel.GetDocuments(applicant.email);
+                    applicant.deleteWeb(applicant.id);
+                    List<DocumentModel> docList = DocumentModel.GetDocuments(applicant.id);
                     string path = appURL + applicantID.ToString() + "\\";
                     foreach (var doc in docList)
                     {
                         Applicant.SaveDocument(path, doc.document_name, doc.document);
-                        doc.deleteDocumentWeb(applicant.email);
+                        doc.deleteDocumentWeb(applicant.id);
                     }
                 }
             }
@@ -116,6 +126,13 @@ namespace HRC_Document_Handler.Controller
             List<ModelVegzettseg> vegzettsegList = ModelVegzettseg.getVegzettsegek("SELECT id, megnevezes_vegzettseg FROM vegzettsegek");
             Utility.deleteWebTable("vegzettsegek");
             foreach (var item in vegzettsegList)
+            {
+                item.insertWeb(mySqlWeb);
+            }
+
+            List<ModelFreelancerList> freelancerList = ModelFreelancerList.getFreelancerList("SELECT * FROM freelancer_list");
+            Utility.deleteWebTable("freelancer_list");
+            foreach (var item in freelancerList)
             {
                 item.insertWeb(mySqlWeb);
             }

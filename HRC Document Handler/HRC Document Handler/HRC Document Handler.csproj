@@ -164,7 +164,6 @@
     <Compile Include="Controller\DatabaseSynchronizer.cs" />
     <Compile Include="Controller\Folder.cs" />
     <Compile Include="Controller\Outdated_cont.cs" />
-    <Compile Include="Controller\Profession.cs" />
     <Compile Include="Enum\Enum.cs" />
     <Compile Include="Model\ApplicantModel.cs" />
     <Compile Include="Model\DocumentModel.cs" />

@@ -38,7 +38,7 @@ namespace HRC_Document_Handler.Model
         public int statusz { get; set; }
         public int hirlevel { get; set; }
         public int kategoria { get; set; }
-        public string project { get; set; }
+        public int projekt_id { get; set; }
 
         public int Insert()  //javított
         {
@@ -68,8 +68,9 @@ namespace HRC_Document_Handler.Model
                 Utility.correction(megjegyzes.ToString(), "") + "'," +
                 Utility.correction(kategoria.ToString()) + ");";
                 mySql.execute(command);
-                command = "SELECT jeloltek.id FROM jeloltek WHERE jeloltek.email = '" + email + "' AND jeloltek.nev = '" + nev + "'";
-                applicantID = Convert.ToInt16(mySql.uniqueList(command, new string[]{"jeloltek"})[0]);
+                command = "SELECT jeloltek.id FROM jeloltek WHERE jeloltek.email = '" + email + "' AND jeloltek.nev = '" + nev + "' AND jeloltek.szuldatum = '"+szuldatum+"'";
+                //applicantID = Convert.ToInt16(mySql.uniqueList(command, new string[]{"jeloltek"})[0]); 
+                applicantID = mySql.getLastInserted();
             }
             catch (Exception)
             {
@@ -139,6 +140,7 @@ namespace HRC_Document_Handler.Model
                 {
                     list.Add(new ModelFullApplicant
                     {
+                        id = Convert.ToInt32(mySqlWeb.sdr["id"]),
                         nev = mySqlWeb.sdr["nev"].ToString(),
                         email = mySqlWeb.sdr["email"].ToString(),
                         telefon = mySqlWeb.sdr["telefon"].ToString(),
@@ -153,7 +155,8 @@ namespace HRC_Document_Handler.Model
                         reg_date = mySqlWeb.sdr["reg_date"].ToString(),
                         megjegyzes = mySqlWeb.sdr["megjegyzes"].ToString(),
                         hirlevel = Convert.ToInt32(mySqlWeb.sdr["hirlevel"]),
-                        kategoria = Convert.ToInt32(mySqlWeb.sdr["kategoria"])
+                        kategoria = Convert.ToInt32(mySqlWeb.sdr["kategoria"]),
+                        projekt_id = Convert.ToInt32(mySqlWeb.sdr["projekt_id"])
                     });
                 }
                 mySqlWeb.sdr.Close();
@@ -161,15 +164,14 @@ namespace HRC_Document_Handler.Model
             }
             return list;
         }
-
-        public void deleteWeb(string email)
+        public void deleteWeb(int webid)
         {
             MySql mySql = new MySql(true);
             try
             {
-                string command = "DELETE FROM jeloltek WHERE jeloltek.email = '" + email + "';";
+                string command = "DELETE FROM jeloltek WHERE jeloltek.id = '" + webid + "';";
                 mySql.execute(command);
-                command = "DELETE FROM projekt_jelolt_kapcs WHERE projekt_jelolt_kapcs.email = '" + email + "';";
+                command = "DELETE FROM projekt_jelolt_kapcs WHERE projekt_jelolt_kapcs.jelolt_id = '" + webid + "';";
                 mySql.execute(command);
             }
             catch (Exception)
@@ -179,8 +181,6 @@ namespace HRC_Document_Handler.Model
             }
             mySql.dbClose();
         }
-
-        
     }
 
 }

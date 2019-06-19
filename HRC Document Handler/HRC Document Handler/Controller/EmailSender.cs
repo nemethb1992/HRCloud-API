@@ -42,6 +42,7 @@ namespace HRC_Document_Handler.Utils
                 string sql = "INSERT INTO `email_storage` (`to`, `subject`, `content`, `hr_id`, `state`, `date`) VALUES ('"+ to + "', 'HR Portal -Phoenix Mecano Kecskemét kft.', 'Teszt', 1, 0, '2019.03.13');";
                 mySql.execute(sql);
             }
+            mySql.dbClose();
         }
 
         public void send(MailData email)

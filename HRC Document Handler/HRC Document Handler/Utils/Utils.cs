@@ -18,7 +18,7 @@ namespace HRC_Document_Handler
         public static void deleteWebTable(string table)
         {
             MySql mySql = new MySql(true);
-            string command = "DELETE FROM hrportalweb." + table + ";";
+            string command = "DELETE FROM " + table + ";";
             mySql.execute(command);
             mySql.dbClose();
         }
