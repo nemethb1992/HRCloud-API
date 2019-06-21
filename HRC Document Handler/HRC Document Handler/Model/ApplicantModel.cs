@@ -38,6 +38,7 @@ namespace HRC_Document_Handler.Model
         public int statusz { get; set; }
         public int hirlevel { get; set; }
         public int kategoria { get; set; }
+        public int bekuldo { get; set; }
         public int projekt_id { get; set; }
 
         public int Insert()  //javított
@@ -47,7 +48,7 @@ namespace HRC_Document_Handler.Model
             int applicantID = 0;
             try
             {
-                string command = "INSERT INTO jeloltek (`id`, `nev`, `email`, `telefon`, `lakhely`, `ertesult`, `szuldatum`, `neme`, `tapasztalat_ev`, `munkakor`, `munkakor2`, `munkakor3`, `vegz_terulet`, `nyelvtudas`,`nyelvtudas2`, `reg_date`, `hirlevel`, `megjegyzes`, `kategoria`) " +
+                string command = "INSERT INTO jeloltek (`id`, `nev`, `email`, `telefon`, `lakhely`, `ertesult`, `szuldatum`, `neme`, `tapasztalat_ev`, `munkakor`, `munkakor2`, `munkakor3`, `vegz_terulet`, `nyelvtudas`,`nyelvtudas2`, `reg_date`, `hirlevel`, `megjegyzes`, `kategoria`,`bekuldo`) " +
                 "VALUES(NULL, '" +
                 nev + "',  '" +
                 email + "', '" +
@@ -66,9 +67,10 @@ namespace HRC_Document_Handler.Model
                 Utility.correction(reg_date.ToString(), "") + "'," +
                 Utility.correction(hirlevel.ToString()) + ",'" +
                 Utility.correction(megjegyzes.ToString(), "") + "'," +
-                Utility.correction(kategoria.ToString()) + ");";
+                Utility.correction(kategoria.ToString(), "") + "," +
+                Utility.correction(bekuldo.ToString()) + ");";
                 mySql.execute(command);
-                command = "SELECT jeloltek.id FROM jeloltek WHERE jeloltek.email = '" + email + "' AND jeloltek.nev = '" + nev + "' AND jeloltek.szuldatum = '"+szuldatum+"'";
+                //command = "SELECT jeloltek.id FROM jeloltek WHERE jeloltek.email = '" + email + "' AND jeloltek.nev = '" + nev + "' AND jeloltek.szuldatum = '"+szuldatum+"'";
                 //applicantID = Convert.ToInt16(mySql.uniqueList(command, new string[]{"jeloltek"})[0]); 
                 applicantID = mySql.getLastInserted();
             }
@@ -156,6 +158,7 @@ namespace HRC_Document_Handler.Model
                         megjegyzes = mySqlWeb.sdr["megjegyzes"].ToString(),
                         hirlevel = Convert.ToInt32(mySqlWeb.sdr["hirlevel"]),
                         kategoria = Convert.ToInt32(mySqlWeb.sdr["kategoria"]),
+                        bekuldo = Convert.ToInt32(mySqlWeb.sdr["bekuldo"]),
                         projekt_id = Convert.ToInt32(mySqlWeb.sdr["projekt_id"])
                     });
                 }

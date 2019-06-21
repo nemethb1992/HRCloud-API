@@ -52,20 +52,20 @@ namespace HRC_Document_Handler.Controller
                     int applicantID = applicant.Insert();
                     if (applicantID != 0)
                     {
+                        List<ProjectConnectionModel> connectedProjects = ProjectConnectionModel.getListWeb("SELECT * FROM projekt_jelolt_kapcs WHERE jelolt_id = " + applicant.id + "");
 
-                        if (applicant.kategoria == 3)
+                        foreach (var projects in connectedProjects)
                         {
-                            ProjectConnectionModel.insertDb_kulsos(applicant, applicantID);
-                        }
-                        else
-                        {
-                            List<ProjectConnectionModel> connectedProjects = ProjectConnectionModel.getListWeb("SELECT * FROM projekt_jelolt_kapcs WHERE jelolt_id = " + applicant.id + "");
-                            foreach (var projects in connectedProjects)
+                            if (applicant.kategoria == 3)
+                            {
+                                ProjectConnectionModel.insertDb(projects, applicantID, true);
+                            }
+                            else
                             {
                                 ProjectConnectionModel.insertDb(projects, applicantID);
-
                             }
                         }
+          
                         applicant.deleteWeb(applicant.id);
                         List<DocumentModel> docList = DocumentModel.GetDocuments(applicant.id);
                         string path = appURL + applicantID.ToString() + "\\";

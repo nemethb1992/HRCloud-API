@@ -39,22 +39,21 @@ namespace HRC_Document_Handler.Model
             return list;
         }
         
-        public static void insertDb(ProjectConnectionModel data, int applicantID)
+        public static void insertDb(ProjectConnectionModel data, int applicantID, bool freelancer = false)
         {
+            string selectCommand = "SELECT count(`projekt_jelolt_kapcs`.`id`) as count FROM `projekt_jelolt_kapcs` WHERE `projekt_id` = " + data.projekt_id + " AND `jelolt_id` = " + applicantID + "";
+            string insertCommand = @"INSERT INTO `projekt_jelolt_kapcs` (`projekt_id`, `jelolt_id`,`hr_id`, `allapota`, `datum`) VALUES (" + data.projekt_id + "," + applicantID + ",default,default,'" + data.date + "') ";
+            if (freelancer)
+            {
+                selectCommand = "SELECT count(`projekt_jelolt_kapcs_kulsos`.`id`) as count FROM `projekt_jelolt_kapcs_kulsos` WHERE `projekt_id` = " + data.projekt_id + " AND `jelolt_id` = " + applicantID + "";
+                insertCommand = @"INSERT INTO `projekt_jelolt_kapcs_kulsos` (`projekt_id`, `jelolt_id`, `datum`) VALUES (" + data.projekt_id + "," + applicantID + ",'" + data.date + "') ";
+            }
             MySql mySql = new MySql();
-            string command = "SELECT count(`projekt_jelolt_kapcs`.`id`) as count FROM `projekt_jelolt_kapcs` WHERE `projekt_id` = "+data.projekt_id+ " AND `jelolt_id` = " + applicantID+"";
-            string result = mySql.SqlSingleQuery(command, "count");
+            string result = mySql.SqlSingleQuery(selectCommand, "count");
             if (result == "0")
             {
-                mySql.execute(@"INSERT INTO `projekt_jelolt_kapcs` (`projekt_id`, `jelolt_id`,`hr_id`, `allapota`, `datum`) VALUES (" + data.projekt_id + "," + applicantID + ",default,default,'" + data.date + "') ");
+                mySql.execute(insertCommand);
             }
-            mySql.dbClose();
-        }
-        public static void insertDb_kulsos(ModelFullApplicant applicant, int applicantID)
-        {
-            MySql mySql = new MySql();
-
-                mySql.execute(@"INSERT INTO `projekt_jelolt_kapcs_kulsos` (`projekt_id`, `jelolt_id`, `datum`) VALUES (" + applicant.projekt_id + "," + applicantID + "," + applicant.reg_date + "') ");
             mySql.dbClose();
         }
 
