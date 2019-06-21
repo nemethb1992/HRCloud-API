@@ -13,7 +13,7 @@ namespace HRC_Document_Handler.Utils
         public EmailSender()
         {
             List<MailData> mails = MailData.GetMails();
-            List<MailData> testMails = MailData.GetMails(true);
+            //List<MailData> testMails = MailData.GetMails(true);
             if (mails.Count > 0)
             {
                 foreach (var mail in mails)
@@ -23,14 +23,14 @@ namespace HRC_Document_Handler.Utils
                 }
             }
 
-            if (testMails.Count > 0)
-            {
-                foreach (var mail in testMails)
-                {
-                    send(mail);
-                    mail.setSent(true);
-                }
-            }
+            //if (testMails.Count > 0)
+            //{
+            //    foreach (var mail in testMails)
+            //    {
+            //        send(mail);
+            //        mail.setSent(true);
+            //    }
+            //}
 
         }
 
@@ -59,7 +59,7 @@ namespace HRC_Document_Handler.Utils
                     {
                         mail.Subject = email.subject;
                         mail.Body = email.content;
-                        mail.From = new MailAddress("hrportal@phoenix-mecano.hu");
+                        mail.From = new MailAddress("balazs.nemeth@phoenix-mecano.hu");
                         mail.IsBodyHtml = true;
                         mail.To.Add(email.to);
                         client.Send(mail);
