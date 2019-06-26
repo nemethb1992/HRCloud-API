@@ -13,25 +13,13 @@ namespace HRC_Document_Handler.Utils
         public EmailSender()
         {
             List<MailData> mails = MailData.GetMails();
-            //List<MailData> testMails = MailData.GetMails(true);
             if (mails.Count > 0)
             {
                 foreach (var mail in mails)
                 {
                     send(mail);
-                    mail.setSent();
                 }
             }
-
-            //if (testMails.Count > 0)
-            //{
-            //    foreach (var mail in testMails)
-            //    {
-            //        send(mail);
-            //        mail.setSent(true);
-            //    }
-            //}
-
         }
 
         protected void testMailLoadup(string to, int db)
@@ -65,10 +53,11 @@ namespace HRC_Document_Handler.Utils
                         client.Send(mail);
                     }
                 }
+                email.setState(1);
             }
-            catch (System.Net.Mail.SmtpException)
+            catch
             {
-
+                email.setState(2);
             }
         }
     }

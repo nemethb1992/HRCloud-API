@@ -46,11 +46,10 @@ namespace HRC_Document_Handler.Model
             return list;
         }
 
-        public void setSent()
+        public void setState(int state)
         {
-            state = 1;
             MySql mySql = new MySql();
-            mySql.execute("UPDATE `email_storage` SET `state` = 1 WHERE `id` = "+id+";");
+            mySql.execute("UPDATE `email_storage` SET `state` = "+state+" WHERE `id` = "+id+";");
             mySql.dbClose();
         }
     }

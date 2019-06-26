@@ -17,29 +17,21 @@ namespace HRC_Document_Handler.Controller
         private MySql mySqlWeb;
         public DatabaseSynchronizer()
         {
-            //try
-            //{
-                mySql = new MySql();
-                mySqlWeb = new MySql(true);
-                appURL = mySql.ApplicantURL().url;
-                if (Utility.hasWriteAccessToFolder(appURL))
-                {
-                    synchronizeApplicants();
-                }
-                else
-                {
-                    Console.WriteLine("- Applicants mappa elérése sikertelen!");
-                }
+            mySql = new MySql();
+            mySqlWeb = new MySql(true);
+            appURL = mySql.ApplicantURL().url;
+            if (Utility.hasWriteAccessToFolder(appURL))
+            {
+                synchronizeApplicants();
+            }
+            else
+            {
+                Console.WriteLine("- Applicants mappa elérése sikertelen!");
+            }
 
-                synchronizeResources();
-                mySql.dbClose();
-                mySqlWeb.dbClose();
-            //}
-            //catch (Exception)
-            //{
-            //    Console.WriteLine("Szál futása sikertelen!");
-            //}
-
+            synchronizeResources();
+            mySql.dbClose();
+            mySqlWeb.dbClose();
         }
 
         private void synchronizeApplicants()
@@ -142,6 +134,15 @@ namespace HRC_Document_Handler.Controller
             foreach (var item in jelentkezesekList)
             {
                 item.Insert(mySql);
+            }
+
+            if (mySql != null)
+            {
+                mySql.dbClose();
+            }
+            if (mySqlWeb != null)
+            {
+                mySqlWeb.dbClose();
             }
         }
     }

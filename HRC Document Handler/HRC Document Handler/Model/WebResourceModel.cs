@@ -185,7 +185,6 @@ namespace HRC_Document_Handler.Model
         {
             string command = "INSERT INTO `projektek`(`id`, `megnevezes_projekt`, `statusz`, `fel_datum`) VALUES (" + id + ",'" + megnevezes_projekt + "'," + statusz + ",'" + fel_datum + "')";
             mySqlWeb.execute(command);
-            mySqlWeb.dbClose();
         }
     }
 }

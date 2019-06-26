@@ -17,8 +17,8 @@ namespace HRC_Document_Handler.Threads
         {
             databaseSynchronisation = new Thread(new ThreadStart(DbSynchroThread.listener));
             mailSender = new Thread(new ThreadStart(MailSenderThread.listener));
-            statisticHandler = new Thread(new ThreadStart(AutoStatisticThread.listener));
-            applicantHandler = new Thread(new ThreadStart(AutoApplicantHandlerThread.listener));
+            //statisticHandler = new Thread(new ThreadStart(AutoStatisticThread.listener));
+            //applicantHandler = new Thread(new ThreadStart(AutoApplicantHandlerThread.listener));
         }
         public void Start()
         {

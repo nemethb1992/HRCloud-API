@@ -94,7 +94,6 @@ namespace HRC_Document_Handler.Model.StatisticModel
         {
             string command = "INSERT INTO `jelentkezesek`(`projekt_id`, `projekt_megnevezes`, `profession_type`, `reg_date`) VALUES (" + projekt_id + ",'" + projekt_megnevezes + "'," + kategoria + ",'" + reg_date + "')";
             mysql.execute(command);
-            mysql.dbClose();
         }
     }
 }
