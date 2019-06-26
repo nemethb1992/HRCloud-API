@@ -15,10 +15,10 @@ namespace HRC_Document_Handler.Threads
         private Thread applicantHandler;
         public ThreadHandler()
         {
-            //databaseSynchronisation = new Thread(new ThreadStart(DbSynchroThread.listener));
+            databaseSynchronisation = new Thread(new ThreadStart(DbSynchroThread.listener));
             mailSender = new Thread(new ThreadStart(MailSenderThread.listener));
-            //statisticHandler = new Thread(new ThreadStart(AutoStatisticThread.listener));
-            //applicantHandler = new Thread(new ThreadStart(AutoApplicantHandlerThread.listener));
+            statisticHandler = new Thread(new ThreadStart(AutoStatisticThread.listener));
+            applicantHandler = new Thread(new ThreadStart(AutoApplicantHandlerThread.listener));
         }
         public void Start()
         {
