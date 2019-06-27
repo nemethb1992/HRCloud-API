@@ -39,7 +39,7 @@ namespace HRC_Document_Handler.Controller
             List<ModelFullApplicant> webList = ModelWebApplicant.getList("SELECT * FROM jeloltek");
             foreach (ModelFullApplicant applicant in webList)
             {
-                if (Applicant.isExists(applicant.email) == 0 || applicant.kategoria == 3)
+                if (Applicant.isExists(applicant.email) == 0 || applicant.kategoria == 2)
                 {
                     int applicantID = applicant.Insert();
                     if (applicantID != 0)
@@ -48,7 +48,7 @@ namespace HRC_Document_Handler.Controller
 
                         foreach (var projects in connectedProjects)
                         {
-                            if (applicant.kategoria == 3)
+                            if (applicant.kategoria == 2)
                             {
                                 ProjectConnectionModel.insertDb(projects, applicantID, true);
                             }
