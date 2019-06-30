@@ -47,7 +47,7 @@ namespace HRC_Document_Handler.Utils
                     {
                         mail.Subject = email.subject;
                         mail.Body = email.content;
-                        mail.From = new MailAddress("balazs.nemeth@phoenix-mecano.hu");
+                        mail.From = new MailAddress("hrportal@phoenix-mecano.hu");
                         mail.IsBodyHtml = true;
                         mail.To.Add(email.to);
                         client.Send(mail);
@@ -55,9 +55,10 @@ namespace HRC_Document_Handler.Utils
                 }
                 email.setState(1);
             }
-            catch
+            catch(Exception e)
             {
                 email.setState(2);
+                Error.Log(e.ToString(), "EmailSender");
             }
         }
     }
