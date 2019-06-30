@@ -12,11 +12,11 @@ namespace HRC_Document_Handler
 {
     public class MySql
     {
-        //private const string CONNECTION_URL_ACTIVE = "Data Source = 192.168.144.189; Port=3306; Initial Catalog = pmkcvtest; User ID=hr-admin; Password=pmhr2018; charset=utf8;";
-        private const string CONNECTION_URL_ACTIVE = "Data Source = 192.168.144.189; Port=3306; Initial Catalog = hrportal_test; User ID=hr-admin; Password=pmhr2018;  charset=utf8;";
+        private const string CONNECTION_URL_ACTIVE = "Data Source = 192.168.144.189; Port=3306; Initial Catalog = pmkcvtest; User ID=hr-admin; Password=pmhr2018; charset=utf8;";
+        //private const string CONNECTION_URL_ACTIVE = "Data Source = 192.168.144.189; Port=3306; Initial Catalog = hrportal_test; User ID=hr-admin; Password=pmhr2018;  charset=utf8;";
 
-        //private const string WEB_DATABASE_CONNECTION = "Data Source = mysql.nethely.hu; Port=3306; Initial Catalog = hrportalweb; User ID=hrportalweb; Password=pmhr2018!;  charset=utf8;";
-        private const string WEB_DATABASE_CONNECTION = "Data Source = mysql.nethely.hu; Port=3306; Initial Catalog = hrportalwebtest; User ID=hrportalwebtest; Password=pmhr2018!;  charset=utf8;";
+        private const string WEB_DATABASE_CONNECTION = "Data Source = mysql.nethely.hu; Port=3306; Initial Catalog = hrportalweb; User ID=hrportalweb; Password=pmhr2018!;  charset=utf8;";
+        //private const string WEB_DATABASE_CONNECTION = "Data Source = mysql.nethely.hu; Port=3306; Initial Catalog = hrportalwebtest; User ID=hrportalwebtest; Password=pmhr2018!;  charset=utf8;";
 
 
         public MySqlConnection conn;
