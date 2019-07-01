@@ -84,6 +84,7 @@ namespace HRC_Document_Handler.Model
         public int id { get; set; }
         public string name { get; set; }
         public string email { get; set; }
+        public string rid { get; set; }
 
         public static List<ModelFreelancerList> getFreelancerList(string command)
         {
@@ -99,7 +100,8 @@ namespace HRC_Document_Handler.Model
                     {
                         id = Convert.ToInt32(mySql.sdr["id"]),
                         name = mySql.sdr["name"].ToString(),
-                        email = mySql.sdr["email"].ToString()
+                        email = mySql.sdr["email"].ToString(),
+                        rid = mySql.sdr["rid"].ToString()
                     });
                 }
                 mySql.sdr.Close();
@@ -109,7 +111,7 @@ namespace HRC_Document_Handler.Model
 
         public void insertWeb(MySql mySqlWeb)
         {
-            string command = "INSERT INTO `freelancer_list`(`id`, `name`, `email`) VALUES (" + id + ",'" + name + "','" + email + "')";
+            string command = "INSERT INTO `freelancer_list`(`id`, `name`, `email`, `rid`) VALUES (" + id + ",'" + name + "','" + email + "','" + rid + "')";
             mySqlWeb.execute(command);
             mySqlWeb.dbClose();
         }
